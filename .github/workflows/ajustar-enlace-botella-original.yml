@@ -1,0 +1,51 @@
+name: Ajustar enlace a botella original
+
+on:
+  push:
+    paths:
+      - 'trigger-botella-original.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Cambiar enlace de referencia
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          html = path.read_text(encoding='utf-8')
+
+          # Cada perfume llevará al resultado visual exacto de su fragancia de inspiración.
+          # Esto evita enviar al cliente solamente a la página general de la marca.
+          new_fn = r'''function referenceUrl(p){
+            const query=((p.brand||'')+' '+(p.inspiration||'')+' perfume bottle original').trim();
+            return 'https://www.google.com/search?tbm=isch&q='+encodeURIComponent(query);
+          }
+          '''
+
+          html = re.sub(r'function referenceUrl\(p\)\{.*?\}\s*function showDetail\(p\)\{', new_fn + 'function showDetail(p){', html, count=1, flags=re.S)
+          html = html.replace('Consultar referencia visual de ${esc(p.inspiration)}', 'Ver botella original de ${esc(p.inspiration)}')
+          html = html.replace('Ver referencia en el sitio de la marca ↗', 'Ver botella original ↗')
+          html = html.replace('Se muestra de forma discreta y separada del producto Nueve Once.', 'La referencia visual se abre en una página de imágenes para localizar el frasco original.')
+
+          path.write_text(html, encoding='utf-8')
+          print('Enlaces actualizados.')
+
+      - name: Publicar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm -f trigger-botella-original.txt
+          git diff --cached --quiet || git commit -m "Enlazar referencia con botella original"
+          git push
