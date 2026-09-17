@@ -59,7 +59,9 @@ footer{background:var(--deep);color:#dce9e7;padding:44px 22px}.foot{max-width:11
 "use strict";
 const RAW=Array.isArray(window.PRODUCTS)?window.PRODUCTS:[];
 const PRODUCTS=RAW.map((p,i)=>Object.assign({},p,{price:300,_id:i}));
-const state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(JSON.parse(localStorage.getItem("nueveOnceFavorites")||"[]").map(Number))};
+let savedFavorites=[];
+try{savedFavorites=JSON.parse(localStorage.getItem("nueveOnceFavorites")||"[]");if(!Array.isArray(savedFavorites))savedFavorites=[];}catch(e){savedFavorites=[];}
+const state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(savedFavorites.map(Number).filter(Number.isFinite))};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const money=n=>"$"+Number(n||0).toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})+" MXN";
@@ -109,7 +111,7 @@ function updateCart(){
  $("total").textContent=money(total);
  $("cartitems").innerHTML=state.cart.length?state.cart.map(p=>`<div class="cartrow"><div><strong>${esc(p.name)}</strong><div style="font-size:11px;color:#657370">${esc(p.category)} · ${money(300)} c/u</div><div class="qty"><button type="button" data-cart-action="minus" data-id="${p._id}">−</button><strong>${p.qty}</strong><button type="button" data-cart-action="plus" data-id="${p._id}">+</button><button type="button" class="remove" data-cart-action="remove" data-id="${p._id}">Eliminar</button></div></div><strong>${money(p.qty*300)}</strong></div>`).join(""):'<p style="color:#657370">Tu bolsa está vacía.</p>';
 }
-function toggleFavorite(id){ const key=Number(id); if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key); localStorage.setItem("nueveOnceFavorites",JSON.stringify([...state.favorites])); render(); }
+function toggleFavorite(id){ const key=Number(id); if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key); try{localStorage.setItem("nueveOnceFavorites",JSON.stringify([...state.favorites]));}catch(e){} render(); }
 function showDetail(p){
  const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
  const query=encodeURIComponent(`${p.brand||""} ${p.inspiration||""} perfume bottle original`.trim());
