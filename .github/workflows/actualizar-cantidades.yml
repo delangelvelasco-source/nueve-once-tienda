@@ -1,0 +1,51 @@
+name: Agregar cantidades al pedido
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar sitio
+        uses: actions/checkout@v4
+
+      - name: Agregar cantidades y pedido completo
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          old = '''function addToCart(p){cart.push(p);updateCart();openCart()}function removeFromCart(i){cart.splice(i,1);updateCart()}function updateCart(){document.getElementById("count").textContent=cart.length;document.getElementById("cartitems").innerHTML=cart.length?cart.map((p,i)=>`<div class="cartrow"><div><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.inspiration)}</small></div><button onclick="removeFromCart(${i})" style="border:0;background:#eef3f2;border-radius:8px;padding:6px">Eliminar</button></div>`).join(""):'<p>Tu bolsa está vacía.</p>';document.getElementById("total").textContent="Consultar"}'''
+
+          new = '''function addToCart(p){const i=cart.findIndex(x=>x.category===p.category&&x.name===p.name);if(i>=0)cart[i].qty=(cart[i].qty||1)+1;else cart.push({...p,qty:1});updateCart();openCart()}function removeFromCart(i){cart.splice(i,1);updateCart()}function changeQty(i,delta){if(!cart[i])return;cart[i].qty=(cart[i].qty||1)+delta;if(cart[i].qty<=0)cart.splice(i,1);updateCart()}function updateCart(){const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);document.getElementById("count").textContent=totalUnits;document.getElementById("cartitems").innerHTML=cart.length?cart.map((p,i)=>`<div class="cartrow"><div style="flex:1"><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.inspiration)}</small><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><button onclick="changeQty(${i},-1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">−</button><strong style="min-width:24px;text-align:center">${p.qty||1}</strong><button onclick="changeQty(${i},1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">+</button><span style="font-size:11px;color:#657370">pza.</span></div></div><button onclick="removeFromCart(${i})" style="border:0;background:#eef3f2;border-radius:8px;padding:6px;height:32px">Eliminar</button></div>`).join(""):'<p>Tu bolsa está vacía.</p>';document.getElementById("total").textContent=cart.length?`${totalUnits} pieza${totalUnits===1?'':'s'} · Precio a consultar`:"$0"}'''
+
+          if old not in s:
+              raise SystemExit('No se encontró el bloque de carrito esperado')
+          s = s.replace(old, new, 1)
+
+          old_checkout = '''const lines=cart.map(p=>`• ${p.name} — ${p.category}`).join("\\n");const msg=`Hola, Nueve Once. Quiero hacer este pedido:\\n\\n${lines}\\n\\n¿Me pueden compartir disponibilidad y precio?`;'''
+          new_checkout = '''const lines=cart.map(p=>`• ${p.qty||1} x ${p.name} — ${p.category}`).join("\\n");const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);const msg=`Hola, Nueve Once. Quiero hacer este pedido:\\n\\n${lines}\\n\\nTotal de piezas: ${totalUnits}\\n\\n¿Me pueden compartir disponibilidad y precio?`;'''
+          if old_checkout not in s:
+              raise SystemExit('No se encontró el bloque de WhatsApp esperado')
+          s = s.replace(old_checkout, new_checkout, 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "Sin cambios que guardar"
+          else
+            git commit -m "Agregar cantidades al carrito y al pedido de WhatsApp"
+            git push
+          fi
