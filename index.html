@@ -26,6 +26,7 @@ button,input,select{font:inherit}.top{background:var(--deep);color:white;text-al
 @media(max-width:680px){#modalcontent{grid-template-columns:1fr}.modalbox{padding:18px!important}.modalimg{height:300px}}
 
 </style>
+  <link rel="stylesheet" href="reference-visual.css">
 </head>
 <body>
 <div class="top">NUEVE ONCE · CATÁLOGO Y TIENDA DIGITAL</div>
@@ -141,4 +142,5 @@ function showDetail(p){
 function checkout(){if(!cart.length)return alert("Agrega al menos una fragancia a tu bolsa.");const lines=cart.map(p=>`• ${p.qty||1} x ${p.name} — ${p.category}`).join("\n");const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);const msg=`Hola, Nueve Once. Quiero hacer este pedido:\n\n${lines}\n\nTotal de piezas: ${totalUnits}\n\n¿Me pueden compartir disponibilidad y precio?`;window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}
 renderFilters();render();updateCart();
 </script>
+  <script src="reference-visual.js"></script>
 </body></html>
