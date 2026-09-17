@@ -12,16 +12,13 @@ button{cursor:pointer}.top{background:var(--deep);color:#fff;text-align:center;p
 header{position:sticky;top:0;z-index:20;background:rgba(247,248,246,.96);backdrop-filter:blur(14px);border-bottom:1px solid #d6e1df}
 .nav{max-width:1180px;margin:auto;padding:16px 22px;display:flex;align-items:center;gap:24px}.logo{font-weight:800;color:var(--deep);font-size:20px;line-height:.8;letter-spacing:-.03em}.logo span{font-weight:500;font-size:11px;letter-spacing:.22em}.navlinks{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}.navlinks button,.cartbtn{border:0;background:transparent;color:var(--deep);padding:9px 12px;border-radius:999px}.cartbtn{background:var(--deep);color:#fff;font-weight:700}
 .hero{max-width:1180px;margin:24px auto 0;padding:42px 22px 30px;display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}.kicker{color:var(--gold);font-weight:800;letter-spacing:.16em;font-size:12px}h1{font-family:Georgia,serif;color:var(--deep);font-size:clamp(42px,7vw,76px);line-height:.92;margin:12px 0 20px}.hero p{font-size:17px;line-height:1.6;color:#536360;max-width:620px}.hero-art{min-height:420px;border-radius:32px;background:#e8efed;display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;box-shadow:0 14px 40px rgba(7,63,58,.1);position:relative;overflow:hidden}.hero-art img{width:100%;height:100%;min-height:404px;object-fit:cover;border-radius:25px}.hero-label{position:absolute;left:22px;bottom:22px;background:rgba(7,63,58,.9);color:#fff;padding:9px 13px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em}
-.section{max-width:1180px;margin:auto;padding:18px 22px 50px}.toolbar{display:grid;grid-template-columns:1fr auto auto auto;gap:12px;align-items:center;margin:10px 0 24px}.search{background:#fff;border:1px solid #d3dfdd;border-radius:14px;padding:13px 15px;outline:none;width:100%}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.filters button{border:1px solid #c7d6d3;background:#fff;color:var(--deep);border-radius:999px;padding:9px 14px}.filters button.active{background:var(--deep);color:#fff;border-color:var(--deep)}
-.favorite-toggle{border:1px solid #c7d6d3;background:#fff;color:var(--deep);padding:12px 14px;border-radius:14px;font-weight:800;white-space:nowrap}.favorite-toggle.active{background:#fff4f4;border-color:#c77;color:#8a3b3b}.favorite-btn{position:absolute;left:12px;top:12px;width:38px;height:38px;border:1px solid rgba(255,255,255,.85);border-radius:50%;background:rgba(255,255,255,.92);color:#7b8583;display:grid;place-items:center;font-size:20px;line-height:1;z-index:3;box-shadow:0 4px 12px rgba(0,0,0,.08)}.favorite-btn.active{color:#b33b4b;background:#fff}.modal-favorite{display:inline-flex;align-items:center;gap:8px;border:1px solid #c7d6d3;background:#fff;color:var(--deep);border-radius:11px;padding:10px 13px;font-weight:800;margin-bottom:12px}.modal-favorite.active{color:#b33b4b;background:#fff4f4;border-color:#d9b4ba}
+.section{max-width:1180px;margin:auto;padding:18px 22px 50px}.toolbar{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;margin:10px 0 24px}.search{background:#fff;border:1px solid #d3dfdd;border-radius:14px;padding:13px 15px;outline:none;width:100%}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.filters button{border:1px solid #c7d6d3;background:#fff;color:var(--deep);border-radius:999px;padding:9px 14px}.filters button.active{background:var(--deep);color:#fff;border-color:var(--deep)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 5px 22px rgba(7,63,58,.05);display:flex;flex-direction:column}.product-visual{height:230px;background:linear-gradient(145deg,#f1f5f4,#dce9e7);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.product-visual img{width:100%;height:100%;object-fit:cover;display:block}.dual-image{display:grid!important;grid-template-columns:1fr 1fr;gap:4px}.new{position:absolute;top:12px;right:12px;background:var(--gold);color:#16322f;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:800;z-index:2}.cardbody{padding:16px;display:flex;flex-direction:column;flex:1}.cat{font-size:10px;letter-spacing:.12em;color:var(--gold);font-weight:800}.card h3{margin:7px 0 5px;color:var(--deep);font-size:17px}.insp,.notes{font-size:12px;color:#657370;line-height:1.5}.notes{margin:10px 0 16px}.price{font-size:18px;font-weight:800;color:var(--deep);margin-top:auto;margin-bottom:10px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions button{border:0;border-radius:11px;padding:10px;font-weight:700}.details{background:var(--soft);color:var(--deep)}.add{background:var(--deep);color:#fff}
 footer{background:var(--deep);color:#dce9e7;padding:44px 22px}.foot{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}footer strong{color:#fff}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;display:none}.overlay.open{display:block}.cart{position:fixed;right:0;top:0;height:100%;width:min(430px,100%);background:#fff;z-index:50;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column}.cart.open{transform:translateX(0)}.carthead{padding:20px;border-bottom:1px solid #ddd;display:flex;justify-content:space-between;align-items:center}.cartitems{padding:16px;overflow:auto;flex:1}.cartrow{padding:12px 0;border-bottom:1px solid #e7eceb;display:grid;grid-template-columns:1fr auto;gap:12px}.qty{display:flex;align-items:center;gap:6px;margin-top:8px}.qty button{border:1px solid #ccd9d7;background:#f5f8f7;border-radius:8px;width:30px;height:30px}.remove{border:0;background:transparent;color:#8a3b3b;font-size:12px}.cartfoot{padding:16px;border-top:1px solid #ddd}.checkout{width:100%;border:0;border-radius:13px;padding:13px;background:var(--deep);color:#fff;font-weight:800}
 .close{border:0;background:#eef3f2;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;font-size:22px;line-height:1;color:var(--deep)}
 .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.5)}.modal.open{display:flex}.modalbox{position:relative;background:#fff;max-width:980px;width:100%;max-height:90vh;overflow:auto;border-radius:22px;padding:24px}.modalcontent{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;align-items:start}.modalimg{width:100%;height:430px;object-fit:cover;border-radius:18px;background:var(--soft)}.modalbox>.close{position:absolute;right:20px;top:20px;z-index:5}.modal-reference{margin-top:18px;border:1px solid var(--line);border-radius:16px;background:var(--cream);padding:14px}.reference-note{background:#eef5f3;border-radius:12px;padding:11px 12px;color:#536360;font-size:11px;line-height:1.5}.reference-link{display:inline-flex;margin-top:10px;background:#fff;border:1px solid #cbdad7;color:var(--deep);padding:9px 12px;border-radius:10px;text-decoration:none;font-weight:800;font-size:11px}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,1fr)}.toolbar{grid-template-columns:1fr auto auto}}
-@media(max-width:680px){.navlinks{display:none}.toolbar{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.hero{padding-top:22px}.hero-art{min-height:320px}.hero-art img{min-height:304px}.modalcontent{grid-template-columns:1fr}.modalimg{height:300px}.modalbox{padding:18px}}
-@media(max-width:440px){.grid{grid-template-columns:1fr}.hero-art img{min-height:280px}.product-visual{height:300px}}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:680px){.navlinks{display:none}.toolbar{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.hero{padding-top:22px}.hero-art{min-height:320px}.hero-art img{min-height:304px}.modalcontent{grid-template-columns:1fr}.modalimg{height:300px}.modalbox{padding:18px}}@media(max-width:440px){.grid{grid-template-columns:1fr}.hero-art img{min-height:280px}.product-visual{height:300px}}
 </style>
 </head>
 <body>
@@ -39,7 +36,7 @@ footer{background:var(--deep);color:#dce9e7;padding:44px 22px}.foot{max-width:11
 <div class="hero-art"><img src="mujer.PNG" alt="Nueve Once Mujer 30 ml"><img src="hombre.PNG" alt="Nueve Once Hombre 30 ml"><span class="hero-label">NUEVE ONCE · 30 ML</span></div></section>
 
 <section class="section" id="catalogo">
-<div class="toolbar"><input id="search" class="search" placeholder="Buscar perfume, inspiración o marca…" autocomplete="off"><select id="sort" class="search"><option value="name">Ordenar: nombre</option><option value="new">Nuevos primero</option><option value="brand">Marca</option></select><button type="button" class="favorite-toggle" id="favoritesToggle">❤️ Favoritos (<span id="favCount">0</span>)</button><button type="button" class="cartbtn" id="openCartToolbar">Ver bolsa</button></div>
+<div class="toolbar"><input id="search" class="search" placeholder="Buscar perfume, inspiración o marca…" autocomplete="off"><select id="sort" class="search"><option value="name">Ordenar: nombre</option><option value="new">Nuevos primero</option><option value="brand">Marca</option></select><button type="button" class="cartbtn" id="openCartToolbar">Ver bolsa</button></div>
 <div class="filters" id="filters"></div><div class="grid" id="grid"></div>
 </section></main>
 
@@ -57,35 +54,21 @@ footer{background:var(--deep);color:#dce9e7;padding:44px 22px}.foot{max-width:11
 </div>
 
 <script src="products.js"></script>
-<script src="favoritos.js?v=1"></script>
 <script>
 (function(){
 "use strict";
 const RAW=Array.isArray(window.PRODUCTS)?window.PRODUCTS:[];
 const PRODUCTS=RAW.map((p,i)=>Object.assign({},p,{price:300,_id:i}));
-const state={category:"TODOS",cart:[],favoritesOnly:false};
+const state={category:"TODOS",cart:[]};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const money=n=>"$"+Number(n||0).toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})+" MXN";
-const fav=()=>window.NueveOnceFavoritos||{has:()=>false,toggle:()=>false,count:()=>0};
 function getFiltered(){
  const q=($("search").value||"").toLowerCase().trim();
- let a=PRODUCTS.filter(p=>(state.category==="TODOS"||p.category===state.category)&&(!q||[p.name,p.inspiration,p.brand,p.notes,p.category].join(" ").toLowerCase().includes(q))&&(!state.favoritesOnly||fav().has(p._id)));
+ let a=PRODUCTS.filter(p=>(state.category==="TODOS"||p.category===state.category)&&(!q||[p.name,p.inspiration,p.brand,p.notes,p.category].join(" ").toLowerCase().includes(q)));
  const s=$("sort").value;
  a.sort((x,y)=>s==="new"?Number(y.new)-Number(x.new)||String(x.name).localeCompare(String(y.name)):s==="brand"?String(x.brand).localeCompare(String(y.brand))||String(x.name).localeCompare(String(y.name)):String(x.name).localeCompare(String(y.name)));
  return a;
-}
-function updateFavoritesUI(){
- const n=fav().count();
- $("favCount").textContent=n;
- const b=$("favoritesToggle");
- b.classList.toggle("active",state.favoritesOnly);
- b.setAttribute("aria-pressed",String(state.favoritesOnly));
- b.innerHTML=`❤️ Favoritos (<span id="favCount">${n}</span>)`;
- document.querySelectorAll("[data-favorite]").forEach(x=>{
-  const active=fav().has(Number(x.dataset.favorite));
-  x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active));x.textContent=active?"♥":"♡";
- });
 }
 function renderFilters(){
  $("filters").innerHTML=["TODOS","MUJER","HOMBRE","UNISEX","ÁRABES"].map(c=>`<button type="button" class="${state.category===c?"active":""}" data-filter="${c}">${c}</button>`).join("");
@@ -94,16 +77,10 @@ function render(){
  const a=getFiltered();
  $("grid").innerHTML=a.length?a.map(p=>{
   const img=p.category==="HOMBRE"?"hombre.PNG":p.category==="MUJER"?"mujer.PNG":null;
-  const active=fav().has(p._id);
   const visual=img?`<img src="${img}" alt="${esc(p.name)} Nueve Once" loading="lazy">`:`<img src="mujer.PNG" alt="Nueve Once Mujer 30 ml" loading="lazy"><img src="hombre.PNG" alt="Nueve Once Hombre 30 ml" loading="lazy">`;
-  return `<article class="card" data-id="${p._id}"><div class="product-visual ${img?"":"dual-image"}"><button type="button" class="favorite-btn ${active?"active":""}" data-favorite="${p._id}" aria-label="${active?"Quitar de favoritos":"Agregar a favoritos"}" aria-pressed="${active}">${active?"♥":"♡"}</button>${p.new?'<span class="new">NUEVO</span>':""}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">${money(300)}</div><div class="actions"><button type="button" class="details" data-action="detail" data-id="${p._id}">Detalles</button><button type="button" class="add" data-action="add" data-id="${p._id}">Agregar</button></div></div></article>`;
+  return `<article class="card" data-id="${p._id}"><div class="product-visual ${img?"":"dual-image"}">${p.new?'<span class="new">NUEVO</span>':""}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">${money(300)}</div><div class="actions"><button type="button" class="details" data-action="detail" data-id="${p._id}">Detalles</button><button type="button" class="add" data-action="add" data-id="${p._id}">Agregar</button></div></div></article>`;
  }).join(""):"<p>No encontramos fragancias con esa búsqueda.</p>";
  renderFilters();
- updateFavoritesUI();
-}
-function toggleFavorite(id){
- fav().toggle(Number(id));
- render();
 }
 function openCart(){ $("overlay").classList.add("open");$("cart").classList.add("open"); }
 function closeCart(){ $("cart").classList.remove("open");$("overlay").classList.remove("open"); }
@@ -131,23 +108,15 @@ function updateCart(){
 function showDetail(p){
  const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
  const query=encodeURIComponent(`${p.brand||""} ${p.inspiration||""} perfume bottle original`.trim());
- const active=fav().has(p._id);
- $("modalcontent").innerHTML=`<img class="modalimg" src="${img}" alt="${esc(p.name)} Nueve Once"><div><div class="cat">${esc(p.category)}</div><h2 style="color:var(--deep);font-family:Georgia,serif;font-size:34px;margin:8px 0 12px">${esc(p.name)}</h2><p><b>Inspiración:</b> ${esc(p.inspiration)}<br><b>Marca de referencia:</b> ${esc(p.brand)}</p><div class="price" style="font-size:25px;margin:18px 0">${money(300)}</div><button type="button" class="modal-favorite ${active?"active":""}" id="modalFavorite" aria-pressed="${active}">${active?"♥":"♡"} ${active?"En favoritos":"Agregar a favoritos"}</button><button type="button" class="add" id="modalAdd" style="width:100%;border:0;border-radius:13px;padding:13px;font-weight:800">Agregar a mi bolsa</button><div class="reference-note" style="margin-top:16px"><b>Fragancia de inspiración</b><br>Nuestras fragancias son creaciones de Nueve Once inspiradas en referencias olfativas reconocidas. No estamos afiliados, asociados ni respaldados por las marcas mencionadas.</div><div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div><div class="modal-reference"><b style="color:var(--deep)">Ver botella original</b><div style="font-size:11px;color:#657370;margin-top:3px">Referencia visual del perfume de inspiración.</div><a class="reference-link" href="https://www.google.com/search?tbm=isch&q=${query}" target="_blank" rel="noopener noreferrer">Ver botella original ↗</a></div></div>`;
- $("modalFavorite").addEventListener("click",()=>{
-   fav().toggle(p._id);
-   showDetail(p);
- });
+ $("modalcontent").innerHTML=`<img class="modalimg" src="${img}" alt="${esc(p.name)} Nueve Once"><div><div class="cat">${esc(p.category)}</div><h2 style="color:var(--deep);font-family:Georgia,serif;font-size:34px;margin:8px 0 12px">${esc(p.name)}</h2><p><b>Inspiración:</b> ${esc(p.inspiration)}<br><b>Marca de referencia:</b> ${esc(p.brand)}</p><div class="price" style="font-size:25px;margin:18px 0">${money(300)}</div><button type="button" class="add" id="modalAdd" style="width:100%;border:0;border-radius:13px;padding:13px;font-weight:800">Agregar a mi bolsa</button><div class="reference-note" style="margin-top:16px"><b>Fragancia de inspiración</b><br>Nuestras fragancias son creaciones de Nueve Once inspiradas en referencias olfativas reconocidas. No estamos afiliados, asociados ni respaldados por las marcas mencionadas.</div><div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div><div class="modal-reference"><b style="color:var(--deep)">Ver botella original</b><div style="font-size:11px;color:#657370;margin-top:3px">Referencia visual del perfume de inspiración.</div><a class="reference-link" href="https://www.google.com/search?tbm=isch&q=${query}" target="_blank" rel="noopener noreferrer">Ver botella original ↗</a></div></div>`;
  $("modalAdd").addEventListener("click",()=>{addToCart(p);closeModal();});
  openModal();
 }
 $("grid").addEventListener("click",e=>{
- const f=e.target.closest("button[data-favorite]");
- if(f){e.stopPropagation();toggleFavorite(f.dataset.favorite);return;}
  const b=e.target.closest("button[data-action]");if(!b)return;
  const p=PRODUCTS.find(x=>x._id===Number(b.dataset.id));if(!p)return;
  if(b.dataset.action==="detail")showDetail(p);else addToCart(p);
 });
-$("favoritesToggle").addEventListener("click",()=>{state.favoritesOnly=!state.favoritesOnly;render();});
 $("filters").addEventListener("click",e=>{
  const b=e.target.closest("button[data-filter]");if(!b)return;
  state.category=b.dataset.filter;render();
