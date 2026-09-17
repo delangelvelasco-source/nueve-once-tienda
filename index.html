@@ -81,8 +81,9 @@ function render(){
   return `<article class="card" data-id="${p._id}"><div class="product-visual ${img?"":"dual-image"}">${p.new?'<span class="new">NUEVO</span>':""}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">${money(300)}</div><div class="actions"><button type="button" class="details" data-action="detail" data-id="${p._id}">Detalles</button><button type="button" class="add" data-action="add" data-id="${p._id}">Agregar</button><button type="button" class="fav ${state.favorites.has(p._id)?"active":""}" data-action="favorite" data-id="${p._id}" aria-label="${state.favorites.has(p._id)?"Quitar de favoritos":"Agregar a favoritos"}" aria-pressed="${state.favorites.has(p._id)}">${state.favorites.has(p._id)?"♥ En favoritos":"♡ Guardar en favoritos"}</button></div></div></article>`;
  }).join(""):"<p>No encontramos fragancias con esa búsqueda.</p>";
  renderFilters();
- $("favoritesCount").textContent=state.favorites.size;
- $("favoritesToggle").classList.toggle("active",state.showFavorites); $("favoritesToggle").setAttribute("aria-pressed",state.showFavorites); $("favoritesToggle").textContent="♥ Mis favoritos "+state.favorites.size;
+ const favoritesCount=$("favoritesCount");
+ if(favoritesCount)favoritesCount.textContent=state.favorites.size;
+ $("favoritesToggle").classList.toggle("active",state.showFavorites); $("favoritesToggle").setAttribute("aria-pressed",state.showFavorites);
 }
 function openCart(){ $("overlay").classList.add("open");$("cart").classList.add("open"); }
 function closeCart(){ $("cart").classList.remove("open");$("overlay").classList.remove("open"); }
