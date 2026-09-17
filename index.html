@@ -64,6 +64,27 @@ function referenceUrl(p){
   };
   return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
 }
+function referenceUrl(p){
+  const b=(p.brand||'').toUpperCase();
+  const map={
+    'VALENTINO':'https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-voce',
+    'CHANEL':'https://www.chanel.com/mx/perfumes/',
+    'DIOR':'https://www.dior.com/es_mx/beauty/fragrance/fragrance-homepage.html',
+    'BVLGARI':'https://www.bulgari.com/es-mx/perfumes',
+    'GUCCI':'https://www.gucci.com/mx/es_mx/st/capsule/beauty/fragrances',
+    'VERSACE':'https://www.versace.com/mx/es/perfumes/',
+    'YSL':'https://www.yslbeautyus.com/fragrance',
+    'PRADA':'https://www.prada-beauty.com/fragrance',
+    'BURBERRY':'https://us.burberry.com/c/beauty/fragrance/',
+    'HERMÈS':'https://www.hermes.com/mx/es/category/perfumes/',
+    'MUGLER':'https://www.mugler.com/fragrance',
+    'CREED':'https://www.creedfragrance.com/',
+    'JO MALONE':'https://www.jomalone.com.mx/',
+    'PARFUMS DE MARLY':'https://parfums-de-marly.com/',
+    'JEAN PAUL GAULTIER':'https://www.jeanpaulgaultier.com/ww/en/p/fragrances'
+  };
+  return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
+}
 function showDetail(p){
   const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
   const refUrl=referenceUrl(p);
