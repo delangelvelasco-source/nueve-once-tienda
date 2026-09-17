@@ -48,7 +48,6 @@ jobs:
               raise SystemExit('No se encontró la función render.')
           html = html2
 
-          # Evitar que el botón Agregar dentro del detalle dependa de JSON incrustado en HTML.
           html = html.replace(
               '<button onclick=\'addToCart(${JSON.stringify(p)})\' class="add"',
               '<button id="modalAddButton" class="add"'
@@ -59,13 +58,18 @@ jobs:
             if(modalAdd) modalAdd.onclick=()=>addToCart(p);'''
           html = html.replace(marker, inject, 1)
 
+          # Cargar una capa independiente de blindaje de eventos.
+          script = '<script src="fix-detail-buttons.js?v=2"></script>'
+          if script not in html:
+              html = html.replace('</body>', script + '\n</body>', 1)
+
           path.write_text(html, encoding='utf-8')
-          print('Botones de detalle corregidos.')
+          print('Botones de detalle corregidos y blindaje cargado.')
 
       - name: Publicar cambios
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "Corregir botones de detalle del catálogo"
+          git diff --cached --quiet || git commit -m "Blindar interacciones del catálogo"
           git push
