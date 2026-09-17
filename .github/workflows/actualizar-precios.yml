@@ -1,0 +1,31 @@
+name: Actualizar precios Nueve Once
+on:
+  push:
+    paths:
+      - '.precio-trigger'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  precio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Aplicar precio de $300
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('const PRODUCTS=window.PRODUCTS||[];const CONFIG=', 'const PRODUCTS=(window.PRODUCTS||[]).map(p=>({...p,price:300}));const CONFIG=')
+          s=s.replace('Consultar precio', '$300.00 MXN')
+          s=s.replace('Precio a consultar', '$300.00 MXN')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Guardar cambios
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Agregar precio de $300 MXN a fragancias'
+          git push
