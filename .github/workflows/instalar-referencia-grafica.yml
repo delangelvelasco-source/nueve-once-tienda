@@ -5,6 +5,8 @@ on:
     paths:
       - 'reference-visual.js'
       - 'reference-visual.css'
+      - '.github/workflows/instalar-referencia-grafica.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
