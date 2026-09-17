@@ -104,6 +104,27 @@ function referenceUrl(p){
   };
   return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
 }
+function referenceUrl(p){
+  const b=(p.brand||'').toUpperCase();
+  const map={
+    'VALENTINO':'https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-voce',
+    'CHANEL':'https://www.chanel.com/mx/perfumes/',
+    'DIOR':'https://www.dior.com/es_mx/beauty/fragrance/fragrance-homepage.html',
+    'BVLGARI':'https://www.bulgari.com/es-mx/perfumes',
+    'GUCCI':'https://www.gucci.com/mx/es_mx/st/capsule/beauty/fragrances',
+    'VERSACE':'https://www.versace.com/mx/es/perfumes/',
+    'YSL':'https://www.yslbeautyus.com/fragrance',
+    'PRADA':'https://www.prada-beauty.com/fragrance',
+    'BURBERRY':'https://us.burberry.com/c/beauty/fragrance/',
+    'HERMÈS':'https://www.hermes.com/mx/es/category/perfumes/',
+    'MUGLER':'https://www.mugler.com/fragrance',
+    'CREED':'https://www.creedfragrance.com/',
+    'JO MALONE':'https://www.jomalone.com.mx/',
+    'PARFUMS DE MARLY':'https://parfums-de-marly.com/',
+    'JEAN PAUL GAULTIER':'https://www.jeanpaulgaultier.com/ww/en/p/fragrances'
+  };
+  return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
+}
 function showDetail(p){
   const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
   const refUrl=referenceUrl(p);
@@ -118,7 +139,7 @@ function showDetail(p){
       <p><b>Marca de referencia:</b> ${esc(p.brand)}</p>
       <div class="price" style="font-size:25px;margin:18px 0">$300.00 MXN</div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
-        <button id="modalAddButton" class="add" style="border:0;border-radius:11px;padding:12px 18px;cursor:pointer;font-weight:800">Agregar a mi bolsa</button>
+        <button onclick='addToCart(${JSON.stringify(p)})' class="add" style="border:0;border-radius:11px;padding:12px 18px;cursor:pointer;font-weight:800">Agregar a mi bolsa</button>
       </div>
       <div class="reference-note"><b>Fragancia de inspiración</b><br>Nuestras fragancias son creaciones de Nueve Once inspiradas en referencias olfativas reconocidas. No estamos afiliados, asociados ni respaldados por las marcas mencionadas.</div>
       <div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div>
@@ -134,8 +155,6 @@ function showDetail(p){
       </div>
     </div>`;
   document.getElementById("modal").classList.add("open");
-  const modalAdd=document.getElementById("modalAddButton");
-  if(modalAdd) modalAdd.onclick=()=>addToCart(p);
 }
 
 function checkout(){if(!cart.length)return alert("Agrega al menos una fragancia a tu bolsa.");const lines=cart.map(p=>`• ${p.qty||1} x ${p.name} — ${p.category}`).join("\n");const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);const msg=`Hola, Nueve Once. Quiero hacer este pedido:\n\n${lines}\n\nTotal de piezas: ${totalUnits}\n\n¿Me pueden compartir disponibilidad y precio?`;window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}
