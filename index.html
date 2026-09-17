@@ -105,7 +105,8 @@ function updateCart(){
  $("total").textContent=money(units*300);
  $("cartitems").innerHTML=state.cart.length?state.cart.map(p=>`<div class="cartrow"><div><strong>${esc(p.name)}</strong><div style="font-size:11px;color:#657370">${esc(p.category)} · ${money(300)} c/u</div><div class="qty"><button type="button" data-cart-action="minus" data-id="${p._id}">−</button><strong>${p.qty}</strong><button type="button" data-cart-action="plus" data-id="${p._id}">+</button><button type="button" class="remove" data-cart-action="remove" data-id="${p._id}">Eliminar</button></div></div><strong>${money(p.qty*300)}</strong></div>`).join(""):'<p style="color:#657370">Tu bolsa está vacía.</p>';
 }
-function toggleFavorite(id){ const key=Number(id); if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key); localStorage.setItem("nueveOnceFavorites",JSON.stringify([...state.favorites])); render(); }\nfunction showDetail(p){
+function toggleFavorite(id){ const key=Number(id); if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key); localStorage.setItem("nueveOnceFavorites",JSON.stringify([...state.favorites])); render(); }
+function showDetail(p){
  const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
  const query=encodeURIComponent(`${p.brand||""} ${p.inspiration||""} perfume bottle original`.trim());
  $("modalcontent").innerHTML=`<img class="modalimg" src="${img}" alt="${esc(p.name)} Nueve Once"><div><div class="cat">${esc(p.category)}</div><h2 style="color:var(--deep);font-family:Georgia,serif;font-size:34px;margin:8px 0 12px">${esc(p.name)}</h2><p><b>Inspiración:</b> ${esc(p.inspiration)}<br><b>Marca de referencia:</b> ${esc(p.brand)}</p><div class="price" style="font-size:25px;margin:18px 0">${money(300)}</div><button type="button" class="add" id="modalAdd" style="width:100%;border:0;border-radius:13px;padding:13px;font-weight:800">Agregar a mi bolsa</button><div class="reference-note" style="margin-top:16px"><b>Fragancia de inspiración</b><br>Nuestras fragancias son creaciones de Nueve Once inspiradas en referencias olfativas reconocidas. No estamos afiliados, asociados ni respaldados por las marcas mencionadas.</div><div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div><div class="modal-reference"><b style="color:var(--deep)">Ver botella original</b><div style="font-size:11px;color:#657370;margin-top:3px">Referencia visual del perfume de inspiración.</div><a class="reference-link" href="https://www.google.com/search?tbm=isch&q=${query}" target="_blank" rel="noopener noreferrer">Ver botella original ↗</a></div></div>`;
@@ -115,7 +116,7 @@ function toggleFavorite(id){ const key=Number(id); if(state.favorites.has(key))s
 $("grid").addEventListener("click",e=>{
  const b=e.target.closest("button[data-action]");if(!b)return;
  const p=PRODUCTS.find(x=>x._id===Number(b.dataset.id));if(!p)return;
- if(b.dataset.action==="detail")showDetail(p);else addToCart(p);
+ if(b.dataset.action==="detail")showDetail(p);else if(b.dataset.action==="favorite")toggleFavorite(p._id);else addToCart(p);
 });
 $("filters").addEventListener("click",e=>{
  const b=e.target.closest("button[data-filter]");if(!b)return;
