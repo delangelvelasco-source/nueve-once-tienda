@@ -42,7 +42,21 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;',
 function setCategory(c){category=c;renderFilters();render()}
 function renderFilters(){const cats=["TODOS","MUJER","HOMBRE","UNISEX","ÁRABES"];document.getElementById("filters").innerHTML=cats.map(c=>`<button class="${category===c?'active':''}" onclick="setCategory('${c}')">${c}</button>`).join("")}
 function filtered(){const q=document.getElementById("search").value.toLowerCase().trim();let arr=PRODUCTS.filter(p=>(category==="TODOS"||p.category===category)&&(!q||[p.name,p.inspiration,p.brand,p.notes,p.category].join(" ").toLowerCase().includes(q)));const sort=document.getElementById("sort").value;arr.sort((a,b)=>sort==="new"?Number(b.new)-Number(a.new)||a.name.localeCompare(b.name):sort==="brand"?a.brand.localeCompare(b.brand)||a.name.localeCompare(b.name):a.name.localeCompare(b.name));return arr}
-function render(){const arr=filtered();document.getElementById("grid").innerHTML=arr.map(p=>{const image=p.category==="HOMBRE"?"hombre.PNG":p.category==="MUJER"?"mujer.PNG":null;const visual=image?`<img src="${image}" alt="${esc(p.name)} Nueve Once" loading="lazy">`:`<img src="mujer.PNG" alt="Nueve Once Mujer 30 ml" loading="lazy"><img src="hombre.PNG" alt="Nueve Once Hombre 30 ml" loading="lazy">`;return `<article class="card"><div class="product-visual ${image?'':'dual-image'}">${p.new?'<span class="new">NUEVO</span>':''}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">$300.00 MXN</div><div class="actions"><button class="details" onclick='showDetail(${JSON.stringify(p)})'>Detalles</button><button class="add" onclick='addToCart(${JSON.stringify(p)})'>Agregar</button></div></div></article>`}).join("")||'<p>No encontramos fragancias con esa búsqueda.</p>'}
+function render(){
+  const arr=filtered();
+  document.getElementById("grid").innerHTML=arr.map((p,i)=>{
+    const image=p.category==="HOMBRE"?"hombre.PNG":p.category==="MUJER"?"mujer.PNG":null;
+    const visual=image?`<img src="${image}" alt="${esc(p.name)} Nueve Once" loading="lazy">`:`<img src="mujer.PNG" alt="Nueve Once Mujer 30 ml" loading="lazy"><img src="hombre.PNG" alt="Nueve Once Hombre 30 ml" loading="lazy">`;
+    return `<article class="card"><div class="product-visual ${image?'':'dual-image'}">${p.new?'<span class="new">NUEVO</span>':''}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">$300.00 MXN</div><div class="actions"><button class="details" type="button" data-detail-index="${i}">Detalles</button><button class="add" type="button" data-add-index="${i}">Agregar</button></div></div></article>`;
+  }).join("")||'<p>No encontramos fragancias con esa búsqueda.</p>';
+
+  document.querySelectorAll('[data-detail-index]').forEach(btn=>{
+    btn.onclick=()=>showDetail(filtered()[Number(btn.dataset.detailIndex)]);
+  });
+  document.querySelectorAll('[data-add-index]').forEach(btn=>{
+    btn.onclick=()=>addToCart(filtered()[Number(btn.dataset.addIndex)]);
+  });
+}
 function addToCart(p){const i=cart.findIndex(x=>x.category===p.category&&x.name===p.name);if(i>=0)cart[i].qty=(cart[i].qty||1)+1;else cart.push({...p,qty:1});updateCart();openCart()}function removeFromCart(i){cart.splice(i,1);updateCart()}function changeQty(i,delta){if(!cart[i])return;cart[i].qty=(cart[i].qty||1)+delta;if(cart[i].qty<=0)cart.splice(i,1);updateCart()}function updateCart(){const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);document.getElementById("count").textContent=totalUnits;document.getElementById("cartitems").innerHTML=cart.length?cart.map((p,i)=>`<div class="cartrow"><div style="flex:1"><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.inspiration)}</small><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><button onclick="changeQty(${i},-1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">−</button><strong style="min-width:24px;text-align:center">${p.qty||1}</strong><button onclick="changeQty(${i},1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">+</button><span style="font-size:11px;color:#657370">pza.</span></div></div><button onclick="removeFromCart(${i})" style="border:0;background:#eef3f2;border-radius:8px;padding:6px;height:32px">Eliminar</button></div>`).join(""):'<p>Tu bolsa está vacía.</p>';document.getElementById("total").textContent=cart.length?`${totalUnits} pieza${totalUnits===1?'':'s'} · $300.00 MXN`:"$0"}function openCart(){document.getElementById("cart").classList.add("open");document.getElementById("overlay").classList.add("open")}function closeCart(){document.getElementById("cart").classList.remove("open");document.getElementById("overlay").classList.remove("open")}
 function referenceUrl(p){
   const query=((p.brand||'')+' '+(p.inspiration||'')+' perfume bottle original').trim();
@@ -104,7 +118,7 @@ function showDetail(p){
       <p><b>Marca de referencia:</b> ${esc(p.brand)}</p>
       <div class="price" style="font-size:25px;margin:18px 0">$300.00 MXN</div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
-        <button onclick='addToCart(${JSON.stringify(p)})' class="add" style="border:0;border-radius:11px;padding:12px 18px;cursor:pointer;font-weight:800">Agregar a mi bolsa</button>
+        <button id="modalAddButton" class="add" style="border:0;border-radius:11px;padding:12px 18px;cursor:pointer;font-weight:800">Agregar a mi bolsa</button>
       </div>
       <div class="reference-note"><b>Fragancia de inspiración</b><br>Nuestras fragancias son creaciones de Nueve Once inspiradas en referencias olfativas reconocidas. No estamos afiliados, asociados ni respaldados por las marcas mencionadas.</div>
       <div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div>
@@ -120,6 +134,8 @@ function showDetail(p){
       </div>
     </div>`;
   document.getElementById("modal").classList.add("open");
+  const modalAdd=document.getElementById("modalAddButton");
+  if(modalAdd) modalAdd.onclick=()=>addToCart(p);
 }
 
 function checkout(){if(!cart.length)return alert("Agrega al menos una fragancia a tu bolsa.");const lines=cart.map(p=>`• ${p.qty||1} x ${p.name} — ${p.category}`).join("\n");const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);const msg=`Hola, Nueve Once. Quiero hacer este pedido:\n\n${lines}\n\nTotal de piezas: ${totalUnits}\n\n¿Me pueden compartir disponibilidad y precio?`;window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`,"_blank")}
