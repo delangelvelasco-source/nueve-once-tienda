@@ -45,67 +45,8 @@ function filtered(){const q=document.getElementById("search").value.toLowerCase(
 function render(){const arr=filtered();document.getElementById("grid").innerHTML=arr.map(p=>{const image=p.category==="HOMBRE"?"hombre.PNG":p.category==="MUJER"?"mujer.PNG":null;const visual=image?`<img src="${image}" alt="${esc(p.name)} Nueve Once" loading="lazy">`:`<img src="mujer.PNG" alt="Nueve Once Mujer 30 ml" loading="lazy"><img src="hombre.PNG" alt="Nueve Once Hombre 30 ml" loading="lazy">`;return `<article class="card"><div class="product-visual ${image?'':'dual-image'}">${p.new?'<span class="new">NUEVO</span>':''}${visual}</div><div class="cardbody"><div class="cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="insp"><b>Inspiración:</b> ${esc(p.inspiration)} · ${esc(p.brand)}</div><div class="notes">${esc(p.notes)}</div><div class="price">$300.00 MXN</div><div class="actions"><button class="details" onclick='showDetail(${JSON.stringify(p)})'>Detalles</button><button class="add" onclick='addToCart(${JSON.stringify(p)})'>Agregar</button></div></div></article>`}).join("")||'<p>No encontramos fragancias con esa búsqueda.</p>'}
 function addToCart(p){const i=cart.findIndex(x=>x.category===p.category&&x.name===p.name);if(i>=0)cart[i].qty=(cart[i].qty||1)+1;else cart.push({...p,qty:1});updateCart();openCart()}function removeFromCart(i){cart.splice(i,1);updateCart()}function changeQty(i,delta){if(!cart[i])return;cart[i].qty=(cart[i].qty||1)+delta;if(cart[i].qty<=0)cart.splice(i,1);updateCart()}function updateCart(){const totalUnits=cart.reduce((n,p)=>n+(p.qty||1),0);document.getElementById("count").textContent=totalUnits;document.getElementById("cartitems").innerHTML=cart.length?cart.map((p,i)=>`<div class="cartrow"><div style="flex:1"><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.inspiration)}</small><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><button onclick="changeQty(${i},-1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">−</button><strong style="min-width:24px;text-align:center">${p.qty||1}</strong><button onclick="changeQty(${i},1)" style="border:0;background:#eef3f2;border-radius:8px;width:32px;height:32px;font-weight:800">+</button><span style="font-size:11px;color:#657370">pza.</span></div></div><button onclick="removeFromCart(${i})" style="border:0;background:#eef3f2;border-radius:8px;padding:6px;height:32px">Eliminar</button></div>`).join(""):'<p>Tu bolsa está vacía.</p>';document.getElementById("total").textContent=cart.length?`${totalUnits} pieza${totalUnits===1?'':'s'} · $300.00 MXN`:"$0"}function openCart(){document.getElementById("cart").classList.add("open");document.getElementById("overlay").classList.add("open")}function closeCart(){document.getElementById("cart").classList.remove("open");document.getElementById("overlay").classList.remove("open")}
 function referenceUrl(p){
-  const b=(p.brand||'').toUpperCase();
-  const map={
-    'VALENTINO':'https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-voce',
-    'CHANEL':'https://www.chanel.com/mx/perfumes/',
-    'DIOR':'https://www.dior.com/es_mx/beauty/fragrance/fragrance-homepage.html',
-    'BVLGARI':'https://www.bulgari.com/es-mx/perfumes',
-    'GUCCI':'https://www.gucci.com/mx/es_mx/st/capsule/beauty/fragrances',
-    'VERSACE':'https://www.versace.com/mx/es/perfumes/',
-    'YSL':'https://www.yslbeautyus.com/fragrance',
-    'PRADA':'https://www.prada-beauty.com/fragrance',
-    'BURBERRY':'https://us.burberry.com/c/beauty/fragrance/',
-    'HERMÈS':'https://www.hermes.com/mx/es/category/perfumes/',
-    'MUGLER':'https://www.mugler.com/fragrance',
-    'CREED':'https://www.creedfragrance.com/',
-    'JO MALONE':'https://www.jomalone.com.mx/',
-    'PARFUMS DE MARLY':'https://parfums-de-marly.com/',
-    'JEAN PAUL GAULTIER':'https://www.jeanpaulgaultier.com/ww/en/p/fragrances'
-  };
-  return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
-}
-function referenceUrl(p){
-  const b=(p.brand||'').toUpperCase();
-  const map={
-    'VALENTINO':'https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-voce',
-    'CHANEL':'https://www.chanel.com/mx/perfumes/',
-    'DIOR':'https://www.dior.com/es_mx/beauty/fragrance/fragrance-homepage.html',
-    'BVLGARI':'https://www.bulgari.com/es-mx/perfumes',
-    'GUCCI':'https://www.gucci.com/mx/es_mx/st/capsule/beauty/fragrances',
-    'VERSACE':'https://www.versace.com/mx/es/perfumes/',
-    'YSL':'https://www.yslbeautyus.com/fragrance',
-    'PRADA':'https://www.prada-beauty.com/fragrance',
-    'BURBERRY':'https://us.burberry.com/c/beauty/fragrance/',
-    'HERMÈS':'https://www.hermes.com/mx/es/category/perfumes/',
-    'MUGLER':'https://www.mugler.com/fragrance',
-    'CREED':'https://www.creedfragrance.com/',
-    'JO MALONE':'https://www.jomalone.com.mx/',
-    'PARFUMS DE MARLY':'https://parfums-de-marly.com/',
-    'JEAN PAUL GAULTIER':'https://www.jeanpaulgaultier.com/ww/en/p/fragrances'
-  };
-  return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
-}
-function referenceUrl(p){
-  const b=(p.brand||'').toUpperCase();
-  const map={
-    'VALENTINO':'https://www.valentino-beauty.us/fragrances/fragrances-women/fragrances-women-voce',
-    'CHANEL':'https://www.chanel.com/mx/perfumes/',
-    'DIOR':'https://www.dior.com/es_mx/beauty/fragrance/fragrance-homepage.html',
-    'BVLGARI':'https://www.bulgari.com/es-mx/perfumes',
-    'GUCCI':'https://www.gucci.com/mx/es_mx/st/capsule/beauty/fragrances',
-    'VERSACE':'https://www.versace.com/mx/es/perfumes/',
-    'YSL':'https://www.yslbeautyus.com/fragrance',
-    'PRADA':'https://www.prada-beauty.com/fragrance',
-    'BURBERRY':'https://us.burberry.com/c/beauty/fragrance/',
-    'HERMÈS':'https://www.hermes.com/mx/es/category/perfumes/',
-    'MUGLER':'https://www.mugler.com/fragrance',
-    'CREED':'https://www.creedfragrance.com/',
-    'JO MALONE':'https://www.jomalone.com.mx/',
-    'PARFUMS DE MARLY':'https://parfums-de-marly.com/',
-    'JEAN PAUL GAULTIER':'https://www.jeanpaulgaultier.com/ww/en/p/fragrances'
-  };
-  return map[b] || ('https://www.google.com/search?q='+encodeURIComponent((p.brand||'')+' '+(p.inspiration||'')+' perfume'));
+  const query=((p.brand||'')+' '+(p.inspiration||'')+' perfume bottle original').trim();
+  return 'https://www.google.com/search?tbm=isch&q='+encodeURIComponent(query);
 }
 function showDetail(p){
   const img=p.category==="HOMBRE"?"hombre.PNG":"mujer.PNG";
@@ -127,12 +68,12 @@ function showDetail(p){
       <div class="notes" style="margin-top:16px"><b>Notas aromáticas</b><br>${esc(p.notes)}</div>
       <div class="modal-reference" id="referenceBox">
         <div class="modal-reference-head" onclick="document.getElementById('referenceBox').classList.toggle('open')">
-          <div><div class="reference-label">REFERENCIA DE INSPIRACIÓN</div><div class="modal-reference-title">Consultar referencia visual de ${esc(p.inspiration)}</div><div class="modal-reference-sub">Se muestra de forma discreta y separada del producto Nueve Once.</div></div>
+          <div><div class="reference-label">REFERENCIA DE INSPIRACIÓN</div><div class="modal-reference-title">Ver botella original de ${esc(p.inspiration)}</div><div class="modal-reference-sub">La referencia visual se abre en una página de imágenes para localizar el frasco original.</div></div>
           <span style="font-size:18px;color:var(--deep)">⌄</span>
         </div>
         <div class="modal-reference-body">
           <div class="reference-note">La imagen o producto de referencia pertenece a su respectiva marca y se utiliza únicamente como guía de inspiración. Nueve Once no reclama propiedad sobre esa marca ni sobre sus imágenes.</div>
-          <a class="reference-link" href="${refUrl}" target="_blank" rel="noopener noreferrer">Ver referencia en el sitio de la marca ↗</a>
+          <a class="reference-link" href="${refUrl}" target="_blank" rel="noopener noreferrer">Ver botella original ↗</a>
         </div>
       </div>
     </div>`;
