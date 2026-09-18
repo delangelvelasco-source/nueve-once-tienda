@@ -127,17 +127,20 @@ render();updateCart();
 <script data-goatcounter="https://nueveonce.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 (function(){
-  var t=setInterval(function(){
-    if(window.goatcounter&&window.goatcounter.visit_count){
-      clearInterval(t);
-      window.goatcounter.visit_count({
-        append:"#visitorCounter",
-        path:"TOTAL",
-        no_branding:true,
-        attr:{class:"goatcounter-total"}
-      });
-    }
-  },100);
+  var el=document.getElementById("visitorCounter");
+  if(!el)return;
+  fetch("https://nueveonce.goatcounter.com/counter/TOTAL.json?cb="+Date.now(),{cache:"no-store"})
+    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(function(d){
+      if(d&&d.count!=null){
+        el.textContent="👥 Visitantes: "+d.count;
+      }else{
+        el.textContent="👥 Visitantes: —";
+      }
+    })
+    .catch(function(){
+      el.textContent="👥 Visitantes: —";
+    });
 })();
 </script>
 </body>
