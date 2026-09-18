@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rifando Ando | Échale número, compa</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:#080808;color:#fff}a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:10;background:rgba(8,8,8,.9);backdrop-filter:blur(12px);border-bottom:1px solid #252525}.nav{max-width:1120px;margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}.logo{font-weight:900;font-size:24px;letter-spacing:-1px}.logo span{color:#d9a936}.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 20px;border-radius:12px;font-weight:800;background:#d9a936;color:#111;border:0;cursor:pointer}
+.hero{max-width:1120px;margin:auto;padding:72px 24px 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}.eyebrow{color:#d9a936;font-weight:800;text-transform:uppercase;letter-spacing:2px;font-size:13px}.hero h1{font-size:clamp(48px,7vw,82px);line-height:.92;margin:16px 0}.hero h1 span{color:#d9a936}.hero p{font-size:19px;color:#b9b9b9;line-height:1.6;max-width:570px}.hero-card{border:1px solid #303030;border-radius:24px;background:linear-gradient(145deg,#191919,#0e0e0e);padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.45)}.prize{height:290px;border-radius:18px;background:radial-gradient(circle at 50% 35%,#343434,#151515 55%,#0c0c0c);display:flex;align-items:center;justify-content:center;font-size:100px}.hero-card h3{font-size:25px;margin:20px 0 5px}.price{font-size:31px;font-weight:900;color:#d9a936}.meta{display:flex;justify-content:space-between;color:#aaa;margin:12px 0}.bar{height:9px;background:#292929;border-radius:20px;overflow:hidden}.bar i{display:block;width:68%;height:100%;background:#d9a936}.section{max-width:1120px;margin:auto;padding:50px 24px}.section h2{font-size:36px;margin:0 0 24px}.tickets{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}.ticket{background:#171717;border:1px solid #2e2e2e;color:#eee;padding:10px 4px;border-radius:9px;cursor:pointer}.ticket:hover{border-color:#d9a936}.ticket.sold{color:#555;text-decoration:line-through;background:#0e0e0e;cursor:not-allowed}.ticket.selected{background:#d9a936;color:#111;border-color:#d9a936;font-weight:900}.legend{display:flex;gap:18px;color:#aaa;font-size:13px;margin:18px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#2e2e2e;margin-right:5px}.dot.sel{background:#d9a936}.dot.sold{background:#555}.cta{margin-top:24px;display:flex;justify-content:space-between;align-items:center;padding:20px;border:1px solid #2d2d2d;border-radius:16px;background:#121212}.total{font-weight:800}.total strong{color:#d9a936;font-size:22px}.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.step{padding:24px;border:1px solid #292929;border-radius:18px;background:#111}.num{color:#d9a936;font-size:14px;font-weight:900}.step h3{margin:12px 0 8px}.step p{color:#999;line-height:1.5}.footer{border-top:1px solid #222;color:#777;text-align:center;padding:30px 24px;margin-top:40px}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:45px}.tickets{grid-template-columns:repeat(5,1fr)}.how{grid-template-columns:1fr}.nav{padding:15px 18px}.hero,.section{padding-left:18px;padding-right:18px}.hero-card{padding:16px}.prize{height:220px}.cta{gap:16px;flex-direction:column;align-items:stretch;text-align:center}}
+</style>
+</head>
+<body>
+<header><nav class="nav"><div class="logo">RIFANDO <span>ANDO</span> 🎟️</div><a class="btn" href="#numeros">Elegir números</a></nav></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">La rifa entre compas</div><h1>¡Échale<br><span>número, compa!</span></h1><p>Participa en nuestras rifas, elige tus números y cruza los dedos. Aquí la suerte se comparte.</p><a class="btn" href="#numeros">Quiero participar</a></div>
+<div class="hero-card"><div class="prize">🏆</div><h3>Rifa de lanzamiento</h3><div class="price">$100 por número</div><div class="meta"><span>68% vendidos</span><span>Sorteo: próximamente</span></div><div class="bar"><i></i></div></div>
+</section>
+<section class="section" id="numeros"><h2>Elige tus números</h2><div class="legend"><span><i class="dot"></i>Disponible</span><span><i class="dot sel"></i>Seleccionado</span><span><i class="dot sold"></i>Vendido</span></div><div class="tickets" id="tickets"></div><div class="cta"><div class="total">Números seleccionados: <strong id="count">0</strong> · Total: <strong>$<span id="total">0</span></strong></div><button class="btn" onclick="participar()">Continuar</button></div></section>
+<section class="section"><h2>¿Cómo funciona?</h2><div class="how"><div class="step"><div class="num">01</div><h3>Elige</h3><p>Selecciona los números que quieras en la rifa.</p></div><div class="step"><div class="num">02</div><h3>Confirma</h3><p>Revisa tus números y completa tus datos de participante.</p></div><div class="step"><div class="num">03</div><h3>Participa</h3><p>Conserva tu confirmación y espera el día del sorteo.</p></div></div></section>
+</main>
+<footer class="footer">© 2026 Rifando Ando · La rifa entre compas</footer>
+<script>
+const sold=new Set([3,7,12,18,24,29,35,41,47,53,58,64,71,76,82,88,94,97]);
+const selected=new Set(); const box=document.getElementById('tickets');
+for(let i=0;i<100;i++){const b=document.createElement('button');b.className='ticket'+(sold.has(i)?' sold':'');b.textContent=String(i).padStart(2,'0');if(!sold.has(i))b.onclick=()=>{selected.has(i)?selected.delete(i):selected.add(i);b.classList.toggle('selected');update()};box.appendChild(b)}
+function update(){document.getElementById('count').textContent=selected.size;document.getElementById('total').textContent=(selected.size*100).toLocaleString('es-MX')}
+function participar(){if(!selected.size){alert('Primero selecciona al menos un número, compa.');return}alert('Tus números están seleccionados. La siguiente etapa será conectar el registro y el pago.')}
+</script>
+</body>
+</html>
