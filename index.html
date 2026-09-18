@@ -145,18 +145,23 @@ render();updateCart();
 (function(){
   var el=document.getElementById("visitorCounter");
   if(!el)return;
-  fetch("https://nueveonce.goatcounter.com/counter/TOTAL.json?cb="+Date.now(),{cache:"no-store"})
-    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
-    .then(function(d){
-      if(d&&d.count!=null){
-        el.textContent="👥 Visitantes: "+d.count;
-      }else{
-        el.textContent="👥 Visitantes: —";
-      }
-    })
-    .catch(function(){
-      el.textContent="👥 Visitantes: —";
-    });
+  var tries=0;
+  function loadCounter(){
+    tries++;
+    if(window.goatcounter && typeof window.goatcounter.get_data==="function"){
+      var data=window.goatcounter.get_data();
+      var path=data&&data.p ? data.p : (location.pathname || "/");
+      fetch("https://nueveonce.goatcounter.com/counter/"+encodeURIComponent(path)+".json?cb="+Date.now(),{cache:"no-store"})
+        .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+        .then(function(d){
+          el.textContent="👥 Visitas: "+((d&&d.count!=null)?d.count:"—");
+        })
+        .catch(function(){el.textContent="👥 Visitas: —";});
+      return;
+    }
+    if(tries<30)setTimeout(loadCounter,200);
+  }
+  loadCounter();
 })();
 </script>
 </body>
