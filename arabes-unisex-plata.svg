@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 760">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3eee5"/><stop offset="1" stop-color="#d7c5a4"/></linearGradient>
+    <linearGradient id="silver" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5f6668"/><stop offset=".18" stop-color="#f4f5f5"/><stop offset=".38" stop-color="#9da3a5"/><stop offset=".55" stop-color="#ffffff"/><stop offset=".78" stop-color="#777e80"/><stop offset="1" stop-color="#e6e8e8"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d8e0df" stop-opacity=".35"/><stop offset=".22" stop-color="#fff" stop-opacity=".8"/><stop offset=".5" stop-color="#b8c3c2" stop-opacity=".25"/><stop offset=".78" stop-color="#fff" stop-opacity=".72"/><stop offset="1" stop-color="#aab5b4" stop-opacity=".35"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="16" stdDeviation="16" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="580" height="760" rx="34" fill="url(#bg)"/>
+  <g opacity=".16" fill="#8b6d2c">
+    <path d="M0 155 Q90 55 180 155 L180 190 L0 190Z"/><path d="M400 155 Q490 55 580 155 L580 190 L400 190Z"/>
+    <circle cx="90" cy="130" r="24"/><circle cx="490" cy="130" r="24"/>
+  </g>
+  <path d="M70 650 H510" stroke="#9d8247" stroke-width="3" opacity=".35"/>
+  <g filter="url(#shadow)">
+    <rect x="208" y="112" width="164" height="115" rx="18" fill="url(#silver)" stroke="#707779" stroke-width="2"/>
+    <rect x="222" y="227" width="136" height="32" rx="7" fill="#dce2e1" stroke="#89918f" stroke-width="2"/>
+    <rect x="174" y="250" width="232" height="398" rx="34" fill="url(#glass)" stroke="#7e8987" stroke-width="3"/>
+    <rect x="190" y="270" width="16" height="356" rx="8" fill="#fff" opacity=".45"/>
+    <rect x="374" y="270" width="13" height="356" rx="7" fill="#fff" opacity=".34"/>
+    <text x="290" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" letter-spacing="7" fill="#183331">nueve</text>
+    <line x1="226" y1="414" x2="354" y2="414" stroke="#183331" stroke-width="2"/>
+    <text x="290" y="449" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" letter-spacing="7" fill="#183331">once</text>
+    <text x="290" y="522" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" letter-spacing="3" fill="#394947">EAU DE PARFUM</text>
+    <text x="290" y="550" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="3" fill="#394947">UNISEX</text>
+    <text x="290" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="3" fill="#394947">30 ml</text>
+  </g>
+  <text x="290" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="20" letter-spacing="5" fill="#6d5420">NUEVE ONCE · ÁRABES</text>
+</svg>
