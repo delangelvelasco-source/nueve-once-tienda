@@ -72,6 +72,18 @@ function money(n){return "$"+Number(n||0).toLocaleString("es-MX",{minimumFractio
 function norm(s){return String(s==null?"":s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function styleTerms(key){return {dulce:["vainilla","caramelo","praline","malvavisco","miel","fruta confitada","frutal","dulce","tonka","chocolate","leche","cafe","cereza","durazno","fresa","pina","azucar","gourmand"],fresco:["fresco","citrico","limon","bergamota","mandarina","toronja","notas marinas","acuatico","menta","sal marina","te verde","romero","lavanda","neroli"],floral:["floral","jazmin","rosa","peonia","gardenia","azahar","violeta","nardos","camelia","flor de naranja","iris","flores blancas"],amaderado:["amaderado","madera","cedro","sandalo","vetiver","oud","pachuli","maderas","savia de madera"],intenso:["intenso","ambar","cuero","oud","incienso","tabaco","especiado","oriental","ahumado","profundo","envolvente"]}[key]||[];}
 function styleMatch(p,key){var text=norm(p.notes);return styleTerms(key).some(function(term){return text.indexOf(norm(term))>=0;});}
+function filtered(){
+var q=norm((($("search")&&$("search").value)||"").trim());
+var tokens=q?q.split(/\s+/).filter(Boolean):[];
+var a=PRODUCTS.filter(function(p){
+ var text=norm([p.name,p.inspiration,p.brand,p.notes,p.category].join(" "));
+ var textMatch=!tokens.length||tokens.some(function(t){return text.indexOf(t)>=0;});
+ return (state.category==="TODOS"||p.category===state.category)&&(!state.showFavorites||state.favorites.has(p._id))&&(!state.noteStyle||styleMatch(p,state.noteStyle))&&textMatch;
+});
+var s=$("sort").value;
+a.sort(function(x,y){if(s==="new")return Number(y.new)-Number(x.new)||String(x.name).localeCompare(String(y.name));if(s==="brand")return String(x.brand).localeCompare(String(y.brand))||String(x.name).localeCompare(String(y.name));return String(x.name).localeCompare(String(y.name));});
+return a;
+}
 function renderFilters(){$("filters").innerHTML=["TODOS","MUJER","HOMBRE","UNISEX","ÁRABES"].map(function(c){return '<button type="button" class="'+(state.category===c?"active":"")+'" data-filter="'+c+'">'+c+"</button>";}).join("");}
 function render(){
 var a=filtered(),html="";
