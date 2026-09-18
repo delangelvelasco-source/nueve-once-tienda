@@ -139,6 +139,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeModal(
 $("checkout").addEventListener("click",function(){if(!state.cart.length){alert("Agrega al menos una fragancia a tu bolsa.");return;}var lines=state.cart.map(function(p){return "• "+p.qty+" x "+p.name+" — "+p.category;}).join("\n");var units=state.cart.reduce(function(n,p){return n+p.qty;},0),subtotal=units*300,discount=subtotal*.12,total=subtotal-discount;var msg="Hola, Nueve Once. Quiero hacer este pedido:\n\n"+lines+"\n\nSubtotal: "+money(subtotal)+"\nDescuento tienda virtual (12%): −"+money(discount)+"\nTotal: "+units+" piezas · "+money(total)+"\n\n¿Me pueden indicar los datos para continuar?";window.open("https://wa.me/528123859824?text="+encodeURIComponent(msg),"_blank");});
 render();updateCart();
 })();
+</script>
 <script>
 (function(){
   var notice=document.querySelector(".legal-mini");
