@@ -148,6 +148,118 @@ header{background:rgba(246,243,236,.94);border-bottom:1px solid rgba(7,63,58,.12
   .hero-presentation{grid-column:1!important;grid-row:3!important}
   .hero-whatsapp{grid-column:2!important;grid-row:3!important;width:auto;min-width:0}
 }
+</style><style id="responsive-cross-device">
+/* Nueve Once — adaptación automática iPhone, Android, tablet y PC */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+img,video,svg{max-width:100%}
+button,a,input,select{touch-action:manipulation}
+.nav{width:100%;max-width:1240px}
+.hero{width:100%;max-width:none}
+.hero>div:first-child{width:auto;max-width:min(540px,calc(100vw - 48px))}
+.hero p{max-width:100%}
+.hero-actions>*{min-width:0}
+.hero-benefits{min-width:0}
+.hero-benefits>*{min-width:0;max-width:100%}
+.brand-categories,.brand-promise,.section,.featured,.quick-shop,.aroma-finder{width:100%}
+.grid,.featured-grid,.category-cards{min-width:0}
+.card,.featured-card,.category-card{min-width:0}
+.card h3,.insp,.notes,.featured-card strong,.featured-card small{overflow-wrap:anywhere}
+.product-visual img{min-width:0}
+
+/* PC y laptops */
+@media(min-width:1101px){
+  .nav{padding-left:clamp(20px,3vw,40px);padding-right:clamp(20px,3vw,40px)}
+  .hero>div:first-child{left:clamp(32px,8vw,110px)}
+}
+
+/* Tablets */
+@media(min-width:681px) and (max-width:1100px){
+  .nav{padding:14px 20px}
+  .logo{font-size:36px}
+  .legal-mini{font-size:10px;max-width:300px}
+  .hero{min-height:600px}
+  .hero-art,.hero-art img{min-height:600px}
+  .hero>div:first-child{left:clamp(24px,5vw,60px);max-width:min(500px,calc(100vw - 48px))}
+  .hero h1{font-size:clamp(46px,7vw,70px)}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .featured-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* Teléfonos */
+@media(max-width:680px){
+  .top{font-size:10px;padding:8px 0}
+  header{position:sticky;top:0}
+  .nav{width:100%;min-height:72px;padding:10px 12px;gap:8px;display:flex}
+  .logo{flex:0 1 auto;font-size:30px;max-width:45vw}
+  .logo span{font-size:7px;letter-spacing:.32em}
+  .legal-mini{display:none}
+  .cartbtn{flex:0 0 auto;font-size:13px;padding:9px 12px;white-space:nowrap}
+  .hero{min-height:calc(100svh - 72px);min-height:610px}
+  .hero>div:first-child{
+    left:20px;right:20px;bottom:30px;top:auto;transform:none;
+    width:auto;max-width:none;
+  }
+  .hero h1{font-size:clamp(40px,12vw,52px);line-height:.92;max-width:100%;overflow-wrap:normal}
+  .hero p{font-size:14px;line-height:1.48;max-width:100%}
+  .hero-art,.hero-art img{min-height:610px;height:100%}
+  .hero-art img{object-position:62% center}
+  .hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:8px}
+  .hero-primary,.hero-secondary{width:100%;min-width:0;padding:12px 8px;font-size:12px}
+  .hero-benefits{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;width:100%}
+  .hero-benefits span,.hero-whatsapp{width:100%;min-width:0;max-width:100%;font-size:10px}
+  .hero-presentation{grid-column:1/2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hero-whatsapp{grid-column:2/3;justify-self:stretch;padding:8px 10px}
+  .brand-promise{padding-left:18px;padding-right:18px}
+  .brand-categories{grid-template-columns:1fr;padding-left:14px;padding-right:14px}
+  .brand-cat{width:100%}
+  .aroma-finder{width:calc(100% - 28px);margin-left:14px;margin-right:14px}
+  .quick-shop,.featured,.section{padding-left:14px;padding-right:14px}
+  .featured-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .category-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .product-visual{height:260px}
+  .cardbody{padding:10px}
+  .card h3{font-size:14px}
+  .insp,.notes{font-size:10px}
+  .actions{grid-template-columns:1fr 1fr}
+  .actions button{font-size:11px}
+  .modalbox{width:calc(100vw - 24px);max-width:none}
+}
+
+/* Teléfonos pequeños */
+@media(max-width:390px){
+  .nav{padding-left:9px;padding-right:9px}
+  .logo{font-size:27px}
+  .cartbtn{font-size:12px;padding:8px 10px}
+  .hero>div:first-child{left:16px;right:16px}
+  .hero h1{font-size:clamp(37px,11.5vw,46px)}
+  .hero p{font-size:13px}
+  .hero-benefits{grid-template-columns:1fr}
+  .hero-presentation,.hero-whatsapp{grid-column:1}
+  .hero-whatsapp{justify-self:stretch}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .product-visual{height:220px}
+  .cardbody{padding:8px}
+  .card h3{font-size:13px}
+  .insp,.notes{font-size:9px}
+  .actions button{font-size:10px;padding:7px 3px}
+}
+
+/* Paisaje en móviles/tablets */
+@media(max-width:900px) and (orientation:landscape){
+  .hero{min-height:560px}
+  .hero-art,.hero-art img{min-height:560px}
+  .hero>div:first-child{bottom:22px}
+  .hero h1{font-size:clamp(36px,8vw,54px)}
+}
+
+/* Accesibilidad y pantallas táctiles */
+@media(hover:none){
+  .category-card:hover,.hero-whatsapp:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
 </style></head>
 <body>
 <div class="top" aria-label="Promoción"><div class="top-track"><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span></div></div>
