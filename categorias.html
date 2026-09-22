@@ -23,15 +23,15 @@ main{max-width:1100px;margin:auto;padding:28px 18px 55px}.eyebrow{font-size:11px
 <main>
 <section class="hero"><div class="eyebrow">NUEVE ONCE · COLECCIONES</div><h1>Encuentra tu esencia.</h1><p>Explora nuestras categorías y descubre la colección que mejor representa tu estilo.</p></section>
 <section class="categories">
-<a class="cat" href="index.html?categoria=MUJER#catalogo"><img src="mujer.PNG" alt="Para ella"><span class="content"><span class="eyebrow">PARA ELLA</span><h2>Fuerza y delicadeza</h2><span>Ver fragancias →</span></span></a>
-<a class="cat" href="index.html?categoria=HOMBRE#catalogo"><img src="hombre.PNG" alt="Para él"><span class="content"><span class="eyebrow">PARA ÉL</span><h2>Carácter y estilo</h2><span>Ver fragancias →</span></span></a>
-<a class="cat" href="index.html?categoria=UNISEX#catalogo"><span class="content"><span class="eyebrow">UNISEX</span><h2>Una esencia, muchas historias.</h2><span>Ver fragancias →</span></span></a>
+<a class="cat" href="mujer.html"><img src="mujer.PNG" alt="Para ella"><span class="content"><span class="eyebrow">PARA ELLA</span><h2>Fuerza y delicadeza</h2><span>Ver fragancias →</span></span></a>
+<a class="cat" href="hombre.html"><img src="hombre.PNG" alt="Para él"><span class="content"><span class="eyebrow">PARA ÉL</span><h2>Carácter y estilo</h2><span>Ver fragancias →</span></span></a>
+<a class="cat" href="unisex.html"><span class="content"><span class="eyebrow">UNISEX</span><h2>Una esencia, muchas historias.</h2><span>Ver fragancias →</span></span></a>
 </section>
 <div class="selected"><div class="eyebrow">SELECCIONA UNA COLECCIÓN</div><h2 id="selectedTitle">Nueve Once</h2><p id="selectedText">Elige una categoría para ir directamente a sus fragancias.</p><a class="cta" id="selectedLink" href="index.html#catalogo">Ver catálogo</a></div>
 </main>
 <script>
 (function(){
-var data={MUJER:["PARA ELLA","Fuerza y delicadeza","Descubre fragancias para ella.","index.html?categoria=MUJER#catalogo"],HOMBRE:["PARA ÉL","Carácter y estilo","Descubre fragancias para él.","index.html?categoria=HOMBRE#catalogo"],UNISEX:["UNISEX","Una esencia, muchas historias.","Fragancias para compartir y expresar tu estilo.","index.html?categoria=UNISEX#catalogo"]};
+var data={MUJER:["PARA ELLA","Fuerza y delicadeza","Descubre fragancias para ella.","mujer.html"],HOMBRE:["PARA ÉL","Carácter y estilo","Descubre fragancias para él.","hombre.html"],UNISEX:["UNISEX","Una esencia, muchas historias.","Fragancias para compartir y expresar tu estilo.","unisex.html"]};
 var k=new URLSearchParams(location.search).get("categoria"),d=data[k];
 if(d){document.getElementById("selectedTitle").textContent=d[1];document.getElementById("selectedText").textContent=d[2];document.getElementById("selectedLink").href=d[3];}
 })();
