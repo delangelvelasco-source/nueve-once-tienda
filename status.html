@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nueve Once · Estado de tu pedido</title>
+<style>
+:root{--deep:#073f3a;--gold:#c9a227;--cream:#f7f8f6;--ink:#17302e;--line:#dbe5e3}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;place-items:center;padding:20px}
+.card{width:min(560px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 16px 45px rgba(7,63,58,.10);text-align:center}
+.logo{font-weight:800;color:var(--deep);font-size:38px;line-height:.8}.logo span{display:block;font-size:11px;font-weight:500;letter-spacing:.25em;margin-top:8px}
+.icon{font-size:52px;margin:25px 0 8px}.kicker{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.15em}
+h1{font-family:Georgia,serif;color:var(--deep);font-size:34px;margin:10px 0}p{color:#657370;line-height:1.55}
+.order{margin:20px 0;padding:14px;border-radius:14px;background:#eef5f3;font-weight:800;color:var(--deep)}
+a{display:inline-block;background:var(--deep);color:#fff;text-decoration:none;border-radius:12px;padding:12px 18px;font-weight:800;margin-top:8px}
+small{display:block;margin-top:18px;color:#84918f}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="logo">nueve<span>once</span></div>
+<div class="icon" id="icon">⏳</div><div class="kicker">ESTADO DEL PEDIDO</div>
+<h1 id="title">Procesando tu pedido</h1><p id="message">Estamos preparando la información de tu pago.</p>
+<div class="order" id="order" hidden></div><a href="./">Volver a Nueve Once</a>
+<small>La confirmación definitiva del pago se realiza mediante Mercado Pago y nuestro sistema de notificaciones.</small>
+</main>
+<script>
+(function(){const q=new URLSearchParams(location.search),state=(q.get("state")||"").toLowerCase(),ref=q.get("external_reference")||"",payment=q.get("payment_id")||"";
+const map={success:{icon:"✅",title:"¡Pago realizado!",message:"Tu pago fue procesado. Estamos confirmando automáticamente tu pedido."},pending:{icon:"🕒",title:"Pago pendiente",message:"Tu pedido fue creado, pero el pago todavía está pendiente. Conserva tu comprobante."},failure:{icon:"⚠️",title:"Pago no completado",message:"Mercado Pago no confirmó el pago. Puedes volver a la tienda e intentarlo nuevamente."}};
+const d=map[state]||{icon:"📦",title:"Estado de tu pedido",message:"Puedes volver a la tienda para continuar."};document.getElementById("icon").textContent=d.icon;document.getElementById("title").textContent=d.title;document.getElementById("message").textContent=d.message;
+if(ref||payment){const e=document.getElementById("order");e.hidden=false;e.textContent=(ref?"Pedido: "+ref:"")+(ref&&payment?" · ":"")+(payment?"Pago: "+payment:"");}})();
+</script>
+</body></html>
