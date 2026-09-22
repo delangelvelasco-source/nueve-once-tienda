@@ -417,6 +417,78 @@ button,a,input,select{touch-action:manipulation}
 @media(min-width:1101px){
   .hero>div:first-child{max-width:540px}
 }
+</style><style id="cross-browser-ios-final">
+/* Compatibilidad final Chrome/Safari iOS y Android */
+html{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+}
+body{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  overflow-x:hidden;
+}
+@media(max-width:680px){
+  .hero{
+    width:100vw!important;
+    max-width:100vw!important;
+    min-width:0!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+  .hero>div:first-child{
+    left:50%!important;
+    right:auto!important;
+    width:calc(100vw - 32px)!important;
+    max-width:520px!important;
+    transform:translateX(-50%)!important;
+    text-align:center!important;
+  }
+  .hero h1,.hero p{
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  .hero-actions,.hero-benefits{
+    width:100%!important;
+    max-width:520px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  .nav{
+    width:100vw!important;
+    max-width:100vw!important;
+    min-width:0!important;
+  }
+  .logo{
+    max-width:none!important;
+    white-space:nowrap!important;
+  }
+  .cartbtn{
+    max-width:calc(45vw - 8px)!important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+}
+/* Safari iOS: elimina diferencias de viewport y evita desplazamiento horizontal */
+@supports (-webkit-touch-callout:none){
+  @media(max-width:680px){
+    .hero>div:first-child{
+      position:absolute!important;
+      left:50%!important;
+      right:auto!important;
+      width:calc(100vw - 32px)!important;
+      transform:translate3d(-50%,0,0)!important;
+    }
+    .hero-art img{
+      width:100%!important;
+      max-width:none!important;
+    }
+  }
+}
 </style></head>
 <body>
 <div class="top" aria-label="Promoción"><div class="top-track"><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span></div></div>
