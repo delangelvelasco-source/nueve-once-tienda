@@ -114,6 +114,23 @@ header{background:rgba(246,243,236,.94);border-bottom:1px solid rgba(7,63,58,.12
   #grid{scroll-margin-top:112px}
   .brand-cat{touch-action:manipulation}
 }
+</style><style>
+.hero-benefits{position:relative}
+.hero-presentation{padding-right:12px}
+.hero-whatsapp{
+  width:44px;height:44px;min-width:44px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#25D366;color:#fff;text-decoration:none;
+  border:2px solid rgba(255,255,255,.85);
+  box-shadow:0 6px 18px rgba(0,0,0,.22);
+  font-size:22px;line-height:1;z-index:4;
+}
+.hero-whatsapp:hover{transform:translateY(-1px)}
+@media(max-width:680px){
+  .hero-benefits{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+  .hero-presentation{grid-column:1/2}
+  .hero-whatsapp{grid-column:2/3;justify-self:end;align-self:center}
+}
 </style></head>
 <body>
 <div class="top" aria-label="Promoción"><div class="top-track"><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span><span class="top-item">✨ 12% DE DESCUENTO · EXCLUSIVO EN PEDIDOS DESDE NUESTRA TIENDA VIRTUAL ✨</span></div></div>
@@ -137,13 +154,13 @@ header{background:rgba(246,243,236,.94);border-bottom:1px solid rgba(7,63,58,.12
       <span>✦ 12% de descuento</span>
       <span>🛍 Compra desde la tienda</span>
       <span>💳 Hasta 3 meses</span>
-      <span>💬 WhatsApp</span>
+      <span class="hero-presentation">🧴 Presentación de 30 ml</span>
     </div>
   </div>
   <div class="hero-art">
     <img src="mujer.PNG" alt="Nueve Once Mujer 30 ml">
     <img src="hombre.PNG" alt="Nueve Once Hombre 30 ml">
-    <span class="hero-label">NUEVE ONCE · 30 ML</span>
+    <a class="hero-whatsapp" href="https://wa.me/528123859824" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">💬</a>
   </div>
 </section>
 <section class="brand-promise">
