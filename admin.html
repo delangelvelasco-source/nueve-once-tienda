@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nueve Once · Administración</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#071b17;color:#f5f0df}
+.wrap{max-width:1100px;margin:auto;padding:24px}
+.card{background:#102a24;border:1px solid #315148;border-radius:18px;padding:20px;margin:16px 0}
+h1{margin:0 0 6px}.muted{color:#b9c9c2}.row{display:flex;gap:10px;flex-wrap:wrap}
+input,button,select{border-radius:10px;border:1px solid #49665d;padding:11px;background:#0b211d;color:#fff}
+button{cursor:pointer}.primary{background:#c9a84d;color:#081713;border-color:#c9a84d;font-weight:700}
+table{width:100%;border-collapse:collapse;margin-top:15px}th,td{text-align:left;padding:11px;border-bottom:1px solid #29453e;font-size:14px}
+.badge{padding:4px 8px;border-radius:999px;background:#23483d}.hidden{display:none}.error{color:#ffb4a8}
+@media(max-width:700px){table{display:block;overflow:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Nueve Once · Panel administrativo</h1>
+    <div class="muted">Pedidos y estados de pago</div>
+  </div>
+
+  <section id="login" class="card">
+    <h2>Acceso</h2>
+    <p class="muted">Solo cuentas autorizadas pueden consultar pedidos.</p>
+    <div class="row">
+      <input id="email" type="email" placeholder="Correo del administrador" autocomplete="email">
+      <input id="password" type="password" placeholder="Contraseña" autocomplete="current-password">
+      <button class="primary" onclick="login()">Entrar</button>
+    </div>
+    <p id="loginMsg" class="error"></p>
+  </section>
+
+  <section id="app" class="hidden">
+    <div class="card">
+      <div class="row">
+        <button onclick="loadOrders()">Actualizar</button>
+        <button onclick="logout()">Cerrar sesión</button>
+      </div>
+      <p id="msg" class="muted"></p>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Pedido</th><th>Cliente</th><th>Total</th><th>Pago</th><th>Pedido</th><th>Fecha</th><th>Acción</th></tr></thead>
+        <tbody id="orders"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://bbjtgisataqqoslkxucy.supabase.co";
+const SUPABASE_KEY="sb_publishable_j-6qXvquv11CDJaZy22ZiA_S4V3GDSF";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+async function login(){
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  document.getElementById("loginMsg").textContent=error?error.message:"";
+  if(!error) showApp();
+}
+async function logout(){await sb.auth.signOut();location.reload()}
+async function showApp(){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  await loadOrders();
+}
+async function loadOrders(){
+  const msg=document.getElementById("msg");
+  msg.textContent="Cargando…";
+  const {data,error}=await sb.from("orders").select("*").order("created_at",{ascending:false});
+  if(error){msg.textContent="No autorizado o error: "+error.message;return}
+  msg.textContent=data.length+" pedido(s)";
+  document.getElementById("orders").innerHTML=data.map(o=>`
+    <tr>
+      <td><b>${escapeHtml(o.order_number)}</b></td>
+      <td>${escapeHtml(o.customer_name)}<br><span class="muted">${escapeHtml(o.customer_email||"")}</span></td>
+      <td>$${Number(o.total).toFixed(2)} MXN</td>
+      <td><span class="badge">${escapeHtml(o.payment_status)}</span></td>
+      <td><span class="badge">${escapeHtml(o.order_status)}</span></td>
+      <td>${new Date(o.created_at).toLocaleString("es-MX")}</td>
+      <td><select onchange="updateStatus('${o.id}',this.value)">
+        ${["pending","paid","preparing","shipped","delivered","cancelled"].map(s=>`<option ${s===o.order_status?"selected":""}>${s}</option>`).join("")}
+      </select></td>
+    </tr>`).join("");
+}
+async function updateStatus(id,status){
+  const {error}=await sb.from("orders").update({order_status:status,updated_at:new Date().toISOString()}).eq("id",id);
+  if(error) alert(error.message); else loadOrders();
+}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+sb.auth.getSession().then(({data})=>{if(data.session)showApp()});
+</script>
+</body>
+</html>
