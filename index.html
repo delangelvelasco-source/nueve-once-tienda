@@ -546,17 +546,20 @@ body{
   <p>Explora fragancias para diferentes estilos y momentos. Elige la familia que más se acerca a ti y descubre tu próxima esencia.</p>
 </section>
 <section class="brand-categories" aria-label="Categorías de fragancias">
-  <button type="button" class="brand-cat" data-category="MUJER" aria-label="Ver perfumes para mujer" style="border:0;padding:0;text-align:left;cursor:pointer">
+  <a class="brand-cat" href="categorias.html?categoria=MUJER" aria-label="Ver perfumes para mujer">
     <img src="mujer.PNG" alt="Fragancias para ella">
     <span class="brand-cat-content"><span class="eyebrow">PARA ELLA</span><h3>Fuerza y delicadeza</h3><span>Descubre la colección →</span></span>
   </button>
-  <button type="button" class="brand-cat" data-category="HOMBRE" aria-label="Ver perfumes para hombre" style="border:0;padding:0;text-align:left;cursor:pointer">
+  <a class="brand-cat" href="categorias.html?categoria=HOMBRE" aria-label="Ver perfumes para hombre">
     <img src="hombre.PNG" alt="Fragancias para él">
     <span class="brand-cat-content"><span class="eyebrow">PARA ÉL</span><h3>Carácter y estilo</h3><span>Descubre la colección →</span></span>
   </button>
-  <button type="button" class="brand-cat brand-cat-full" data-category="UNISEX" aria-label="Ver perfumes unisex" style="border:0;padding:0;text-align:left;cursor:pointer">
+  <a class="brand-cat brand-cat-full" href="categorias.html?categoria=UNISEX" aria-label="Ver perfumes unisex">
     <span class="brand-cat-content"><span class="eyebrow">UNISEX</span><h3>Una esencia, muchas historias.</h3><span>Fragancias para compartir y expresar tu estilo →</span></span>
   </button>
+</a>
+</a>
+</a>
 </section>
 <section class="aroma-finder"><div><div class="kicker">ENCUENTRA TU AROMA</div><h2>¿Qué estilo buscas?</h2><p>Selecciona una opción y te mostraremos fragancias relacionadas con ese perfil.</p></div><div class="aroma-options"><button type="button" data-aroma="dulce">❤️ Dulce</button><button type="button" data-aroma="fresco">🌊 Fresco</button><button type="button" data-aroma="floral">🌸 Floral</button><button type="button" data-aroma="amaderado">🪵 Amaderado</button><button type="button" data-aroma="frutal">🍓 Frutal</button><button type="button" data-aroma="gourmand">🍮 Gourmand</button><button type="button" data-aroma="ambarado">🟠 Ambarado</button><button type="button" data-aroma="acuatico">💧 Acuático</button></div></section>
 <section class="featured"><div class="featured-head"><div><div class="kicker">DESCUBRE NUEVE ONCE</div><h2>Destacados</h2><p>Una selección de fragancias para descubrir la colección.</p></div></div><div class="featured-grid" id="featuredGrid"></div></section>
@@ -588,7 +591,7 @@ var dataEl=document.getElementById("productData");
 var RAW=[];
 try{RAW=JSON.parse(dataEl?dataEl.textContent:"[]");}catch(e){RAW=[];}
 var PRODUCTS=RAW.map(function(p,i){var x=Object.assign({},p);x.price=300;x._id=i;return x;});
-var state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(),noteStyle:null,seasonal:false};
+var state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(),noteStyle:null,seasonal:false};\ntry{var requestedCategory=new URLSearchParams(location.search).get("categoria");if(["MUJER","HOMBRE","UNISEX","ÁRABES"].indexOf(requestedCategory)>=0)state.category=requestedCategory;}catch(e){}
 try{var sf=JSON.parse(localStorage.getItem("nueveOnceFavorites")||"[]");if(Array.isArray(sf))sf.forEach(function(x){var n=Number(x);if(Number.isFinite(n))state.favorites.add(n);});}catch(e){}
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];});}
