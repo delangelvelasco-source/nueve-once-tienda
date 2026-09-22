@@ -588,7 +588,8 @@ var dataEl=document.getElementById("productData");
 var RAW=[];
 try{RAW=JSON.parse(dataEl?dataEl.textContent:"[]");}catch(e){RAW=[];}
 var PRODUCTS=RAW.map(function(p,i){var x=Object.assign({},p);x.price=300;x._id=i;return x;});
-var state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(),noteStyle:null,seasonal:false};\ntry{var requestedCategory=new URLSearchParams(location.search).get("categoria");if(["MUJER","HOMBRE","UNISEX","ÁRABES"].indexOf(requestedCategory)>=0)state.category=requestedCategory;}catch(e){}
+var state={category:"TODOS",cart:[],showFavorites:false,favorites:new Set(),noteStyle:null,seasonal:false};
+try{var requestedCategory=new URLSearchParams(location.search).get("categoria");if(["MUJER","HOMBRE","UNISEX","ÁRABES"].indexOf(requestedCategory)>=0)state.category=requestedCategory;}catch(e){}
 try{var sf=JSON.parse(localStorage.getItem("nueveOnceFavorites")||"[]");if(Array.isArray(sf))sf.forEach(function(x){var n=Number(x);if(Number.isFinite(n))state.favorites.add(n);});}catch(e){}
 function $(id){return document.getElementById(id);}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];});}
