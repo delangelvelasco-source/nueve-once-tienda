@@ -715,8 +715,15 @@ $("checkout").addEventListener("click",async function(){
    });
    var data=await response.json().catch(function(){return{};});
    if(!response.ok||!data.checkout_url)throw new Error(data.error||"No se pudo iniciar el pago.");
-   status.textContent="Pedido "+data.order_number+" creado. Abriendo Mercado Pago…";
-   window.location.href=data.checkout_url;
+   status.innerHTML="Pedido "+data.order_number+" creado.<br><strong>Para pagar, abre Mercado Pago en Safari.</strong><br><a id="openMercadoPago" href=""+data.checkout_url+"" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;background:var(--deep);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:800">🔐 Abrir Mercado Pago</a><div style="font-size:11px;margin-top:7px;color:#657370">Si estás dentro de WhatsApp y vuelve a aparecer un error, toca <b>…</b> y elige <b>Abrir en Safari</b>.</div>";
+   var paymentLink=$("openMercadoPago");
+   if(paymentLink){
+     paymentLink.addEventListener("click",function(){
+       setTimeout(function(){
+         status.innerHTML="Si Mercado Pago no se abre correctamente, toca <b>…</b> en la barra de WhatsApp y selecciona <b>Abrir en Safari</b>.";
+       },1200);
+     });
+   }
  }catch(err){
    console.error(err);status.textContent=err&&err.message?err.message:"No se pudo iniciar el pago.";
    btn.disabled=false;btn.style.opacity="1";
