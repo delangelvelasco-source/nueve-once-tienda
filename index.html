@@ -573,7 +573,7 @@ body{
 <aside class="cart" id="cart" aria-label="Bolsa de compra">
 <div class="carthead"><strong>Tu bolsa</strong><button type="button" class="close" id="closeCart" aria-label="Cerrar">×</button></div>
 <div class="cartitems" id="cartitems"></div>
-<div class="cartfoot"><div style="font-size:11px;color:#657370;margin-bottom:8px;text-align:right">🎁 12% de descuento exclusivo por comprar desde la tienda virtual</div><div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;gap:12px"><strong id="summary">0 piezas</strong><strong id="total">$0.00 MXN</strong></div><div style="display:grid;gap:8px;margin-bottom:10px"><input id="checkoutName" class="search" type="text" maxlength="120" placeholder="Nombre completo" autocomplete="name"><input id="checkoutEmail" class="search" type="email" maxlength="160" placeholder="Correo electrónico" autocomplete="email"><input id="checkoutPhone" class="search" type="tel" maxlength="40" placeholder="Teléfono (opcional)" autocomplete="tel"></div><button type="button" class="checkout" id="checkout">💳 Pagar con Mercado Pago</button><div id="checkoutStatus" style="font-size:12px;color:#657370;text-align:center;margin-top:8px;min-height:18px"></div></div>
+<div class="cartfoot"><div style="font-size:11px;color:#657370;margin-bottom:8px;text-align:right">🎁 12% de descuento exclusivo por comprar desde la tienda virtual</div><div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px;gap:12px"><strong id="summary">0 piezas</strong><strong id="total">$0.00 MXN</strong></div><div style="display:grid;gap:8px;margin-bottom:10px"><input id="checkoutName" class="search" type="text" maxlength="120" placeholder="Nombre completo" autocomplete="name"><input id="checkoutEmail" class="search" type="email" maxlength="160" placeholder="Correo electrónico" autocomplete="email"><input id="checkoutPhone" class="search" type="tel" maxlength="40" placeholder="Teléfono (opcional)" autocomplete="tel"></div><div style="display:grid;gap:8px"><button type="button" class="checkout" id="whatsappOrder" style="background:#168b57">💬 Hacer pedido por WhatsApp</button><button type="button" class="checkout" id="checkout">💳 Pagar con Mercado Pago</button></div><div id="checkoutStatus" style="font-size:12px;color:#657370;text-align:center;margin-top:8px;min-height:18px"></div></div>
 </aside>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Detalle del perfume">
@@ -730,6 +730,36 @@ $("checkout").addEventListener("click",async function(){
  }
 });
 render();updateCart();
+})();
+
+// Nueve Once: respaldo de catálogo + pedido por WhatsApp.
+// Mantiene la tienda funcional aunque falle la carga dinámica del catálogo.
+(function(){
+  "use strict";
+  function esc2(s){return String(s==null?"":s).replace(/[&<>"']/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];});}
+  function money2(n){return "$"+Number(n||0).toLocaleString("es-MX",{minimumFractionDigits:2,maximumFractionDigits:2})+" MXN";}
+  var data=document.getElementById("productData"),grid=document.getElementById("grid");
+  if(data&&grid&&!grid.querySelector(".card")){
+    try{
+      var items=JSON.parse(data.textContent||"[]");
+      grid.innerHTML=items.map(function(p,i){
+        var img=p.category==="HOMBRE"?"hombre.PNG":p.category==="MUJER"?"mujer.PNG":p.category==="ÁRABES"?"arabes-unisex-plata.svg":"mujer.PNG";
+        return '<article class="card" data-id="'+i+'"><div class="product-visual"><img src="'+img+'" alt="'+esc2(p.name)+' Nueve Once" loading="lazy" onerror="this.onerror=null;this.src=\'mujer.PNG\'"></div><div class="cardbody"><div class="cat">'+esc2(p.category)+'</div><h3>'+esc2(p.name)+'</h3><div class="insp"><b>Inspiración:</b> '+esc2(p.inspiration)+' · '+esc2(p.brand)+'</div><div class="notes">'+esc2(p.notes)+'</div><div class="price">'+money2(300)+'</div><div class="actions"><button type="button" class="details" data-action="detail" data-id="'+i+'">Detalles</button><button type="button" class="add" data-action="add" data-id="'+i+'">Agregar</button></div></div></article>';
+      }).join("");
+    }catch(e){console.error("Catálogo Nueve Once:",e);}
+  }
+  var wa=document.getElementById("whatsappOrder");
+  if(wa)wa.addEventListener("click",function(){
+    var rows=document.querySelectorAll("#cartitems .cartrow"), lines=[],total=document.getElementById("total");
+    rows.forEach(function(row){
+      var name=row.querySelector("strong"), qty=row.querySelector(".qty strong");
+      if(name&&qty)lines.push("• "+name.textContent.trim()+" x"+qty.textContent.trim());
+    });
+    if(!lines.length){alert("Agrega al menos una fragancia a tu bolsa.");return;}
+    var name=(document.getElementById("checkoutName")||{}).value||"";
+    var msg="Hola Nueve Once, quiero hacer un pedido desde la tienda.%0A%0A"+encodeURIComponent(lines.join("\n"))+"%0A%0ATotal mostrado: "+encodeURIComponent(total?total.textContent:"")+"%0A%0ANombre: "+encodeURIComponent(name.trim());
+    window.open("https://wa.me/528123859824?text="+msg,"_blank","noopener");
+  });
 })();
 </script>
 <script>
