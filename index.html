@@ -805,25 +805,59 @@ render();updateCart();
 <script data-goatcounter="https://nueveonce.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 (function(){
+  "use strict";
   var el=document.getElementById("visitorCounter");
   if(!el)return;
-  var tries=0;
-  function loadCounter(){
-    tries++;
-    if(window.goatcounter && typeof window.goatcounter.get_data==="function"){
-      var data=window.goatcounter.get_data();
-      var path=data&&data.p ? data.p : (location.pathname || "/");
-      fetch("https://nueveonce.goatcounter.com/counter/"+encodeURIComponent(path)+".json?cb="+Date.now(),{cache:"no-store"})
+
+  var attempts=0;
+  var maxAttempts=12;
+
+  function show(n){
+    if(n!==undefined && n!==null && String(n)!==""){
+      el.textContent="👥 Visitas: "+n;
+      return true;
+    }
+    return false;
+  }
+
+  function fetchCount(path){
+    var encoded=encodeURIComponent(path);
+    var urls=[
+      "https://nueveonce.goatcounter.com/counter/"+encoded+".json",
+      "https://nueveonce.goatcounter.com/counter/"+encoded.replace(/%2F/g,"/")+".json"
+    ];
+
+    var i=0;
+    function next(){
+      if(i>=urls.length){
+        attempts++;
+        if(attempts<maxAttempts)setTimeout(load,1000);
+        return;
+      }
+      var url=urls[i++];
+      fetch(url,{cache:"no-store",credentials:"omit"})
         .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
         .then(function(d){
-          el.textContent="👥 Visitas: "+((d&&d.count!=null)?d.count:"—");
+          var count=d&&d.count!=null?d.count:(d&&d.counts!=null?d.counts:null);
+          if(count!==null && count!==undefined){
+            show(count);
+          }else{
+            next();
+          }
         })
-        .catch(function(){el.textContent="👥 Visitas: —";});
-      return;
+        .catch(next);
     }
-    if(tries<30)setTimeout(loadCounter,200);
+    next();
   }
-  loadCounter();
+
+  function load(){
+    var path=window.location.pathname||"/";
+    fetchCount(path);
+  }
+
+  // El contador de GoatCounter registra la visita de forma asíncrona.
+  // Esperamos brevemente para evitar mostrar "—" mientras termina de cargar.
+  setTimeout(load,1200);
 })();
 </script>
 </body>
