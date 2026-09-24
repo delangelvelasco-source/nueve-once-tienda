@@ -671,7 +671,7 @@ $("count").textContent=units;
 $("summary").innerHTML=units+" "+(units===1?"pieza":"piezas")+'<br><small style="font-weight:500;color:#657370">Subtotal: '+money(subtotal)+" · Descuento 12%: −"+money(discount)+"</small>";
 $("total").textContent=money(total);
 var html="";
-state.cart.forEach(function(p){html+='<div class="cartrow"><div><strong>'+esc(p.name)+'</strong><div style="font-size:11px;color:#657370">'+esc(p.category)+" · "+money(300)+' c/u</div><div class="qty"><button type="button" data-cart-action="minus" data-id="'+p._id+'">−</button><strong>'+p.qty+'</strong><button type="button" data-cart-action="plus" data-id="'+p._id+'">+</button><button type="button" class="remove" data-cart-action="remove" data-id="'+p._id+'">Eliminar</button></div></div><strong>'+money(p.qty*300)+"</strong></div>";});
+state.cart.forEach(function(p){html+='<div class="cartrow" data-id="'+p._id+'"><div><strong>'+esc(p.name)+'</strong><div style="font-size:11px;color:#657370">'+esc(p.category)+" · "+money(300)+' c/u</div><div class="qty"><button type="button" data-cart-action="minus" data-id="'+p._id+'">−</button><strong>'+p.qty+'</strong><button type="button" data-cart-action="plus" data-id="'+p._id+'">+</button><button type="button" class="remove" data-cart-action="remove" data-id="'+p._id+'">Eliminar</button></div></div><strong>'+money(p.qty*300)+"</strong></div>";});
 $("cartitems").innerHTML=html||'<p style="color:#657370">Tu bolsa está vacía.</p>';
 }
 function toggleFavorite(id){var key=Number(id);if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key);try{localStorage.setItem("nueveOnceFavorites",JSON.stringify(Array.from(state.favorites)));}catch(e){}render();}
@@ -772,15 +772,31 @@ render();updateCart();
   }
   var wa=document.getElementById("whatsappOrder");
   if(wa)wa.addEventListener("click",function(){
-    var rows=document.querySelectorAll("#cartitems .cartrow"), lines=[],total=document.getElementById("total");
+    var rows=document.querySelectorAll("#cartitems .cartrow"), dataEl=document.getElementById("productData"), products=[], lines=[];
+    try{products=JSON.parse(dataEl?dataEl.textContent:"[]");}catch(e){products=[];}
+    var units=0;
     rows.forEach(function(row){
-      var name=row.querySelector("strong"), qty=row.querySelector(".qty strong");
-      if(name&&qty)lines.push("• "+name.textContent.trim()+" x"+qty.textContent.trim());
+      var qtyEl=row.querySelector(".qty strong"), id=Number(row.getAttribute("data-id"));
+      var qty=qtyEl?Number(qtyEl.textContent.trim()):0, p=products[id];
+      if(qty>0){
+        units+=qty;
+        if(p){
+          lines.push("• "+qty+"x "+p.name+" | Inspiración: "+p.inspiration+" — "+p.brand);
+        }
+      }
     });
-    if(!lines.length){alert("Agrega al menos una fragancia a tu bolsa.");return;}
-    var name=(document.getElementById("checkoutName")||{}).value||"";
-    var msg="Hola Nueve Once, quiero hacer un pedido desde la tienda.%0A%0A"+encodeURIComponent(lines.join("\n"))+"%0A%0ATotal mostrado: "+encodeURIComponent(total?total.textContent:"")+"%0A%0ANombre: "+encodeURIComponent(name.trim());
-    window.open("https://wa.me/528123859824?text="+msg,"_blank","noopener");
+    if(!lines.length){alert("Agrega al menos una fragancia a la bolsa.");return;}
+    var subtotal=units*300, discount=subtotal*0.12, total=subtotal-discount;
+    var customerName=((document.getElementById("checkoutName")||{}).value||"").trim();
+    var msg="Hola Nueve Once, quiero hacer el siguiente pedido:\n\n"+
+      lines.join("\n")+
+      "\n\nTOTAL DEL PEDIDO\n"+
+      units+" "+(units===1?"pza":"pzas")+" — "+money2(subtotal)+"\n"+
+      "Descuento 12% — "+money2(discount)+"\n"+
+      "TOTAL A PAGAR — "+money2(total)+"\n"+
+      "USTED AHORRA — "+money2(discount)+"\n\n"+
+      "Nombre:"+(customerName?" "+customerName:"");
+    window.open("https://wa.me/528123859824?text="+encodeURIComponent(msg),"_blank","noopener");
   });
 })();
 </script>
